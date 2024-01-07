@@ -121,8 +121,7 @@ function RegistrationFormRegistrationType() {
                 setTeamMembers(
                   Array.from(
                     { length: parseInt(newCount, 10) },
-                    (partial_, i) =>
-                      teamMembers[i] || { firstName: "", lastName: "" }
+                    (__, i) => teamMembers[i] || { firstName: "", lastName: "" }
                   )
                 );
               }}

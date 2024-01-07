@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { ParticipantService } from '../../model/participant';
-import { IParticipant } from '../../../src/interface/type';
+import React, { useEffect, useState } from "react";
+import { ParticipantService } from "../../model/participant";
+import { IParticipant } from "../../../src/interface/type";
 
+export const parti = [{}];
 const GetAllParticipant: React.FC = () => {
   const [participants, setParticipants] = useState<IParticipant[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const participantService = new ParticipantService();
-
+  console.log("participants", participants);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -14,7 +15,7 @@ const GetAllParticipant: React.FC = () => {
         console.log(allParticipants);
         setParticipants(allParticipants);
       } catch (error) {
-        console.error('Failed to fetch participants', error);
+        console.error("Failed to fetch participants", error);
       } finally {
         setLoading(false);
       }
@@ -33,7 +34,9 @@ const GetAllParticipant: React.FC = () => {
         <h1 className="font-heading tracking-tight text-4xl sm:text-5xl font-bold mb-4">
           Meet our Participants
         </h1>
-        <p className="text-lg text-gray-500 mb-20">Here are our esteemed participants.</p>
+        <p className="text-lg text-gray-500 mb-20">
+          Here are our esteemed participants.
+        </p>
         <div className="flex flex-wrap -mx-4 -mb-8">
           {participants.map((participant, key) => (
             <div key={key} className={divKey}>
@@ -41,6 +44,7 @@ const GetAllParticipant: React.FC = () => {
                 <div className="text-center">
                   <span className="block text-2xl font-bold mb-2">
                     {participant.first_name} {participant.last_name}
+                    ok
                   </span>
                   <span className="block text-lg text-gray-700 font-medium">
                     {participant.email}
@@ -71,6 +75,6 @@ const GetAllParticipant: React.FC = () => {
 
 export default GetAllParticipant;
 
-export const divKey = 'w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8';
+export const divKey = "w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8";
 export const divKey2 =
-  'p-8 bg-white border-2 border-gray-100 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 ease-in-out';
+  "p-8 bg-white border-2 border-gray-100 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 ease-in-out";

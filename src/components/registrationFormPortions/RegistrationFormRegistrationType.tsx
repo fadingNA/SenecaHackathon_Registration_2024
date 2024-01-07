@@ -1,8 +1,10 @@
-import { Box } from '@mui/material';
-import CustomFormLabel from '../utils/CustomFormLabel';
-import FormRadioGroup from '../utils/FormRadioGroup';
-import FormSelect from '../utils/FormSelect';
-import { useAtom } from 'jotai';
+import { Box } from "@mui/material";
+import CustomFormLabel from "../utils/CustomFormLabel";
+import FormRadioGroup from "../utils/FormRadioGroup";
+import FormSelect from "../utils/FormSelect";
+import React from "react";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+import { useAtom } from "jotai";
 import {
   isTeamCompleteAtom,
   challengeNameAtom,
@@ -12,7 +14,8 @@ import {
   senecaStatusAtom,
   finaleJoinPreferenceAtom,
   pastHackathonParticipationAtom,
-} from '../../atoms/FormAtoms';
+  numberOfTeamMembersAtom,
+} from "../../atoms/FormAtoms";
 import {
   ShirtSizes,
   RegisType,
@@ -21,8 +24,8 @@ import {
   senecaStudentStatus,
   Preference,
   pastHackathonParticipationList,
-} from '../../interface/type';
-import FormTextField from '../utils/FormTextField';
+} from "../../interface/type";
+import FormTextField from "../utils/FormTextField";
 
 function RegistrationFormRegistrationType() {
   const [isTeamComplete, setIsTeamComplete] = useAtom(isTeamCompleteAtom);
@@ -31,10 +34,42 @@ function RegistrationFormRegistrationType() {
   const [registrationType, setRegistrationType] = useAtom(registrationTypeAtom);
   const [teamName, setTeamName] = useAtom(teamNameAtom);
   const [senecaStatus, setSenecaStatus] = useAtom(senecaStatusAtom);
-  const [finaleJoinPreference, setFinaleJoinPreference] = useAtom(finaleJoinPreferenceAtom);
+  const [finaleJoinPreference, setFinaleJoinPreference] = useAtom(
+    finaleJoinPreferenceAtom
+  );
   const [pastHackathonParticipation, setPastHackathonParticipation] = useAtom(
     pastHackathonParticipationAtom
   );
+
+  const [teamMembers, setTeamMembers] = React.useState([{ firstName: "" }]);
+  const [numberOfTeamMembers, setNumberOfTeamMembers] = useAtom(
+    numberOfTeamMembersAtom
+  );
+
+  React.useEffect(() => {
+    setTeamMembers(
+      Array.from(
+        { length: parseInt(numberOfTeamMembers, 10) },
+        (_, i) => teamMembers[i] || { firstName: "", lastName: "" }
+      )
+    );
+  }, [numberOfTeamMembers]);
+
+  const handleTeamMemberChange = (index: Number, value: any) => {
+    const updatedTeamMembers = teamMembers.map((member, i) =>
+      i === index ? { ...member, firstName: value } : member
+    );
+    setTeamMembers(updatedTeamMembers);
+  };
+
+  const handleRemovePerson = (index: Number) => {
+    const updatedTeamMembers = teamMembers.filter((_, i) => i !== index);
+    setTeamMembers(updatedTeamMembers);
+
+    if (updatedTeamMembers.length < parseInt(numberOfTeamMembers, 10)) {
+      setNumberOfTeamMembers(updatedTeamMembers.length.toString());
+    }
+  };
 
   return (
     <Box sx={{ marginTop: 6 }}>
@@ -60,7 +95,7 @@ function RegistrationFormRegistrationType() {
           defaultValue=""
           sx={{ marginRight: 1 }}
         />
-        {registrationType == 'Team' && (
+        {registrationType == "Team" && (
           <>
             <FormTextField
               id="teamName"
@@ -71,7 +106,82 @@ function RegistrationFormRegistrationType() {
               variable={teamName}
               defaultValue=""
               sx={{ marginRight: 1 }}
-            ></FormTextField>
+            />
+            {/**
+            {teamMembers.length <= 4 && (
+              <button type="button" onClick={handleAddPerson} className="mt-9">
+                <PersonAddIcon />
+              </button>
+            )}
+             */}
+
+            <div
+              onChange={(e: any) => {
+                const newCount = e.target.value;
+                setTeamMembers(
+                  Array.from(
+                    { length: parseInt(newCount, 10) },
+                    (partial_, i) =>
+                      teamMembers[i] || { firstName: "", lastName: "" }
+                  )
+                );
+              }}
+            >
+              <FormSelect
+                label="Number of Team Members"
+                labelId="teamMemberCount"
+                variable={numberOfTeamMembers.toString()}
+                setVariable={(value: any) => setNumberOfTeamMembers(value)}
+                valueList={[1, 2, 3, 4, 5].map((num) => num.toString())}
+                defaultValue="1"
+                sx={{ marginRight: 1 }}
+                id="teamMemberCount"
+              />
+            </div>
+            <br />
+            <div className="flex flex-col font-medium">
+              {teamMembers.map((member, index) => (
+                <div key={index} className="flex flex-row items-center mb-2">
+                  <div className="mr-2 mt-6">
+                    <span>Member {index + 1}:</span>
+                  </div>
+                  <FormTextField
+                    id={`teamMemberFirstName-${index}`}
+                    name="teamMemberFirstName"
+                    label="First Name"
+                    placeholder="Enter first name"
+                    setVariable={(value: any) =>
+                      handleTeamMemberChange(index, value)
+                    }
+                    variable={member.firstName}
+                    defaultValue=""
+                    sx={{ marginRight: 1 }}
+                  />
+                  <FormTextField
+                    id={`teamMemberLastName-${index}`}
+                    name="teamMemberLastName"
+                    label="Last Name"
+                    placeholder="Enter last name"
+                    setVariable={(value: any) =>
+                      handleTeamMemberChange(index, value)
+                    }
+                    variable={member.firstName}
+                    defaultValue=""
+                    sx={{ marginRight: 1 }}
+                  />
+                  {teamMembers.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemovePerson(index)}
+                      className="ml-2 mt-6"
+                    >
+                      <PersonRemoveIcon />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
             <FormRadioGroup
               id="senecaStatus"
               label="Are you or one of your team members a Seneca Student?"

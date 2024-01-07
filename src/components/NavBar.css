@@ -1,0 +1,22 @@
+.navBarTop {
+  background-color: red;
+  width: 100%;
+  right: 0;
+  justify-content: right;
+  display: flex;
+  padding: 0.25em;
+}
+
+.navBarBody {
+  background-color: white;
+}
+
+.hosted-by {
+  margin-bottom: 0.25em;
+  font-size: small;
+}
+
+.nav-link {
+  text-decoration: none !important;
+  color: inherit !important;
+}

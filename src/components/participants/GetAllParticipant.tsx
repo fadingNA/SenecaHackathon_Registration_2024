@@ -4,7 +4,7 @@ import { IParticipant } from "../../../src/interface/type";
 
 export const parti = [{}];
 const GetAllParticipant: React.FC = () => {
-  const [participants, setParticipants] = useState<IParticipant[]>([]);
+  const [participants] = useState<IParticipant[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const participantService = new ParticipantService();
   const [groupedParticipants, setGroupedParticipants] = useState<

@@ -15,8 +15,6 @@ import {
   finaleJoinPreferenceAtom,
   pastHackathonParticipationAtom,
   numberOfTeamMembersAtom,
-  teamMemberFirstNameAtom,
-  teamMemberLastNameAtom,
 } from "../../atoms/FormAtoms";
 import {
   ShirtSizes,
@@ -30,9 +28,6 @@ import {
 import FormTextField from "../utils/FormTextField";
 
 function RegistrationFormRegistrationType() {
-  const [lastName, setLastName] = useAtom(teamMemberLastNameAtom);
-  const [firstName, setFirstName] = useAtom(teamMemberFirstNameAtom);
-
   const [isTeamComplete, setIsTeamComplete] = useAtom(isTeamCompleteAtom);
   const [challengeName, setChallengeName] = useAtom(challengeNameAtom);
   const [tShirtSize, setTShirtSize] = useAtom(tShirtSizeAtom);

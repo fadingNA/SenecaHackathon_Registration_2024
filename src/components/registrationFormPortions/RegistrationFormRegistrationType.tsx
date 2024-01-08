@@ -15,6 +15,8 @@ import {
   finaleJoinPreferenceAtom,
   pastHackathonParticipationAtom,
   numberOfTeamMembersAtom,
+  teamMemberFirstNameAtom,
+  teamMemberLastNameAtom,
 } from "../../atoms/FormAtoms";
 import {
   ShirtSizes,
@@ -28,6 +30,9 @@ import {
 import FormTextField from "../utils/FormTextField";
 
 function RegistrationFormRegistrationType() {
+  const [lastName, setLastName] = useAtom(teamMemberLastNameAtom);
+  const [firstName, setFirstName] = useAtom(teamMemberFirstNameAtom);
+
   const [isTeamComplete, setIsTeamComplete] = useAtom(isTeamCompleteAtom);
   const [challengeName, setChallengeName] = useAtom(challengeNameAtom);
   const [tShirtSize, setTShirtSize] = useAtom(tShirtSizeAtom);
@@ -41,7 +46,9 @@ function RegistrationFormRegistrationType() {
     pastHackathonParticipationAtom
   );
 
-  const [teamMembers, setTeamMembers] = React.useState([{ firstName: "" }]);
+  const [teamMembers, setTeamMembers] = React.useState([
+    { firstName: "", lastName: "" },
+  ]);
   const [numberOfTeamMembers, setNumberOfTeamMembers] = useAtom(
     numberOfTeamMembersAtom
   );
@@ -55,9 +62,9 @@ function RegistrationFormRegistrationType() {
     );
   }, [numberOfTeamMembers]);
 
-  const handleTeamMemberChange = (index: Number, value: any) => {
+  const handleTeamMemberChange = (index: number, key: any, value: any) => {
     const updatedTeamMembers = teamMembers.map((member, i) =>
-      i === index ? { ...member, firstName: value } : member
+      i === index ? { ...member, [key]: value } : member
     );
     setTeamMembers(updatedTeamMembers);
   };
@@ -145,26 +152,26 @@ function RegistrationFormRegistrationType() {
                     <span>Member {index + 1}:</span>
                   </div>
                   <FormTextField
-                    id={`teamMemberFirstName-${index}`}
-                    name="teamMemberFirstName"
+                    id={`firstName-${index}`}
+                    name="firstName"
                     label="First Name"
-                    placeholder="Enter first name"
+                    placeholder="Your first name"
                     setVariable={(value: any) =>
-                      handleTeamMemberChange(index, value)
+                      handleTeamMemberChange(index, "firstName", value)
                     }
                     variable={member.firstName}
                     defaultValue=""
                     sx={{ marginRight: 1 }}
                   />
                   <FormTextField
-                    id={`teamMemberLastName-${index}`}
-                    name="teamMemberLastName"
+                    id={`lastName-${index}`}
+                    name="lastName"
                     label="Last Name"
-                    placeholder="Enter last name"
+                    placeholder="Your last name"
                     setVariable={(value: any) =>
-                      handleTeamMemberChange(index, value)
+                      handleTeamMemberChange(index, "lastName", value)
                     }
-                    variable={member.firstName}
+                    variable={member.lastName}
                     defaultValue=""
                     sx={{ marginRight: 1 }}
                   />

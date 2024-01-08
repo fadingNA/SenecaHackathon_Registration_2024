@@ -23,3 +23,5 @@ export const registrationTypeAtom = atom("");
 
 // Non add
 export const numberOfTeamMembersAtom = atom("");
+export const teamMemberFirstNameAtom = atom("");
+export const teamMemberLastNameAtom = atom("");

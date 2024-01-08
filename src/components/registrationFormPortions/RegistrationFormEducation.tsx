@@ -1,14 +1,14 @@
-import CustomFormLabel from '../utils/CustomFormLabel';
-import { Box } from '@mui/material';
-import FormTextField from '../utils/FormTextField';
-import { useAtom } from 'jotai';
+import CustomFormLabel from "../utils/CustomFormLabel";
+import { Box } from "@mui/material";
+import FormTextField from "../utils/FormTextField";
+import { useAtom } from "jotai";
 import {
   programAtom,
   collegeNameAtom,
   semesterAtom,
   graduationYearAtom,
-} from '../../atoms/FormAtoms';
-import FormNumberField from '../utils/FormNumberField';
+} from "../../atoms/FormAtoms";
+import FormNumberField from "../utils/FormNumberField";
 
 function RegistrationFormEducation() {
   const [programName, setProgramName] = useAtom(programAtom);
@@ -34,7 +34,7 @@ function RegistrationFormEducation() {
           id="programName"
           name="programName"
           label="Program"
-          placeholder="Marketing"
+          placeholder="Computer Programming and Analysis or CPA , etc"
           setVariable={setProgramName}
           variable={programName}
           defaultValue=""
@@ -48,7 +48,7 @@ function RegistrationFormEducation() {
           placeholder="3"
           setVariable={setSemester}
           variable={semester}
-          defaultValue={3}
+          defaultValue={1}
           sx={{ marginRight: 1 }}
           max={10}
           min={1}

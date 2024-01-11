@@ -15,6 +15,8 @@ import {
   finaleJoinPreferenceAtom,
   pastHackathonParticipationAtom,
   numberOfTeamMembersAtom,
+  teamMembersAtom,
+  newTeamMemberTemplate,
 } from "../../atoms/FormAtoms";
 import {
   ShirtSizes,
@@ -41,9 +43,8 @@ function RegistrationFormRegistrationType() {
     pastHackathonParticipationAtom
   );
 
-  const [teamMembers, setTeamMembers] = React.useState([
-    { firstName: "", lastName: "" },
-  ]);
+  const [teamMembers, setTeamMembers] = useAtom(teamMembersAtom);
+
   const [numberOfTeamMembers, setNumberOfTeamMembers] = useAtom(
     numberOfTeamMembersAtom
   );
@@ -57,7 +58,11 @@ function RegistrationFormRegistrationType() {
     );
   }, [numberOfTeamMembers]);
 
-  const handleTeamMemberChange = (index: number, key: any, value: any) => {
+  const handleTeamMemberChange = (
+    index: number,
+    key: string,
+    value: string
+  ) => {
     const updatedTeamMembers = teamMembers.map((member, i) =>
       i === index ? { ...member, [key]: value } : member
     );
@@ -109,6 +114,7 @@ function RegistrationFormRegistrationType() {
               defaultValue=""
               sx={{ marginRight: 1 }}
             />
+
             {/**
             {teamMembers.length <= 4 && (
               <button type="button" onClick={handleAddPerson} className="mt-9">
@@ -140,11 +146,11 @@ function RegistrationFormRegistrationType() {
               />
             </div>
             <br />
-            <div className="flex flex-col font-medium">
+            <div className="font-medium">
               {teamMembers.map((member, index) => (
-                <div key={index} className="flex flex-row items-center mb-2">
+                <div key={index} className="">
                   <div className="mr-2 mt-6">
-                    <span>Member {index + 1}:</span>
+                    <span>Member {index + 1}</span>
                   </div>
                   <FormTextField
                     id={`firstName-${index}`}
@@ -170,11 +176,22 @@ function RegistrationFormRegistrationType() {
                     defaultValue=""
                     sx={{ marginRight: 1 }}
                   />
+                  <FormTextField
+                    id={`institute-${index}`}
+                    name="institute"
+                    label="Institute"
+                    placeholder="Institute Name"
+                    setVariable={(value: any) =>
+                      handleTeamMemberChange(index, "institute", value)
+                    }
+                    variable={member.institute}
+                    defaultValue=""
+                  />
                   {teamMembers.length > 1 && (
                     <button
                       type="button"
                       onClick={() => handleRemovePerson(index)}
-                      className="ml-2 mt-6"
+                      className="relative ml-3 mt-9 sm:absolute md:ml-0 sm:mt-0 sm:top-1/2 sm:-translate-y-1/2"
                     >
                       <PersonRemoveIcon />
                     </button>

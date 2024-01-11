@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { ParticipantService } from "../../model/participant";
+/*
+GetAllParticipant.tsx
+Get all participant component By default it will display all participants
+We can switch to view by team
+Get Participant data from firebase
+https://console.firebase.google.com/u/0/project/senecahackathonregistration/firestore/data/~2FParticipants~2FSikMkVNJclmbyEYQySNg
+*/
+
+import React, { useState } from "react";
+import ParticipantCard from "./ParticipantCard";
+import TeamCard from "./TeamCard";
 import { IParticipant } from "../../../src/interface/type";
+import { ParticipantService } from "../../model/participant";
 
-export const parti = [{}];
 const GetAllParticipant: React.FC = () => {
-  const [participants] = useState<IParticipant[]>([]);
+  const [participants, setParticipants] = useState<IParticipant[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [viewByTeam, setViewByTeam] = useState<boolean>(false);
   const participantService = new ParticipantService();
-  const [groupedParticipants, setGroupedParticipants] = useState<
-    Record<string, IParticipant[]>
-  >({});
 
-  console.log("participants", participants);
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchData = async () => {
       try {
         const allParticipants: IParticipant[] =
           await participantService.getAll();
         console.log("allParticipants", allParticipants);
-        const grouped = groupByTeam(allParticipants);
-        setGroupedParticipants(grouped);
-        console.log("grouped", grouped);
+        setParticipants(allParticipants);
       } catch (error) {
         console.error("Failed to fetch participants", error);
       } finally {
@@ -38,31 +42,41 @@ const GetAllParticipant: React.FC = () => {
   return (
     <section className="relative py-12 md:py-24 bg-gray-300">
       <div className="relative container px-4 mx-auto">
-        <h1 className="font-heading tracking-tight text-4xl sm:text-5xl font-semibold mb-4">
-          Meet our Team
+        <h1 className="mb-4 text-4xl font-semibold tracking-tight sm:text-5xl font-heading">
+          {viewByTeam ? "Our Teams" : "Our Participants"}
         </h1>
-        <p className="text-lg text-gray-500 mb-20">
-          Here are our esteemed participants.
-        </p>
-        <div className="flex flex-wrap -mx-4 -mb-8">
-          {Object.entries(groupedParticipants).map(
-            ([teamName, teamMembers]) => (
-              <div key={teamName} className={divKey}>
-                <div className={divKey2 + "text-center"}>
-                  <h2 className="font-medium text-md">{teamName}</h2>
-                  {teamMembers.map((participant, index) => (
-                    <div key={index}>
-                      {/* Render participant details */}
-                      <div className=" bg-slate-800 p-5 text-gray-50 rounded-sm">
-                        {participant.first_name} {participant.last_name}
-                      </div>
-                      {/* Include other participant details as needed */}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )
-          )}
+        <div className="mb-8 flex justify-center">
+          <button
+            className="mr-4 rounded bg-blue-500 px-4 py-2 text-white"
+            onClick={() => setViewByTeam(false)}
+          >
+            View by Participant
+          </button>
+          <button
+            className="rounded bg-green-500 px-4 py-2 text-white"
+            onClick={() => setViewByTeam(true)}
+          >
+            View by Team
+          </button>
+        </div>
+        <div className="flex flex-wrap -mx-4">
+          {viewByTeam
+            ? participants
+                .filter(
+                  (participant) =>
+                    participant?.team &&
+                    participant?.team?.teamMembers.length > 0
+                )
+                .map((participant, index) => (
+                  // Dont fix key as index it will cause issue when  delete a team
+                  <TeamCard
+                    key={`${participant?.team}-${index}`}
+                    team={participant.team}
+                  />
+                ))
+            : participants.map((participant, index) => (
+                <ParticipantCard key={index} participant={participant} />
+              ))}
         </div>
       </div>
     </section>
@@ -70,23 +84,3 @@ const GetAllParticipant: React.FC = () => {
 };
 
 export default GetAllParticipant;
-
-export const divKey = "w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8";
-export const divKey2 =
-  "p-5 bg-white border-2 border-gray-100 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 ease-in-out mt-2";
-
-export const groupByTeam = (participants: IParticipant[]) => {
-  return participants.reduce(
-    (groups: Record<string, IParticipant[]>, participant: IParticipant) => {
-      const team = participant.teamName || "No Team";
-      console.log("team", team);
-      if (!groups[team]) {
-        groups[team] = [];
-      }
-      groups[team].push(participant);
-      console.log("groups", groups);
-      return groups;
-    },
-    {}
-  );
-};

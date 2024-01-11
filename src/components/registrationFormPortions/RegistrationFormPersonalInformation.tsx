@@ -45,7 +45,7 @@ function RegistrationFormPersonalInformation() {
           id="email"
           name="email"
           label="Email"
-          placeholder="exampel@myseneca.ca"
+          placeholder="example@myseneca.ca"
           setVariable={setEmail}
           variable={email}
           defaultValue=""
@@ -64,6 +64,7 @@ function RegistrationFormPersonalInformation() {
           onChange={setPhoneNumber}
           sx={{ width: "30%", marginTop: 3, marginRight: 1, minWidth: "240px" }}
           defaultCountry="CA"
+          
         />
       </Box>
     </Box>

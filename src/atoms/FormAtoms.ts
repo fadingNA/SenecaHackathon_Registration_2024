@@ -7,7 +7,6 @@ export const emailAtom = atom("");
 export const cellPhoneAtom = atom("");
 export const programAtom = atom("");
 export const collegeNameAtom = atom("");
-export const teamNameAtom = atom("");
 export const teamRoleAtom = atom("");
 export const isTeamCompleteAtom = atom(false);
 export const tShirtSizeAtom = atom("");
@@ -22,6 +21,20 @@ export const finaleJoinPreferenceAtom = atom("");
 export const registrationTypeAtom = atom("");
 
 // Non add
-export const numberOfTeamMembersAtom = atom("");
-export const teamMemberFirstNameAtom = atom("");
-export const teamMemberLastNameAtom = atom("");
+// Atom for team name
+export const teamNameAtom = atom("");
+
+// Atom for team members array
+export const teamMembersAtom = atom<
+  { firstName: string; lastName: string; institute: string }[]
+>([]);
+
+// (for UI rendering or other logic)
+export const numberOfTeamMembersAtom = atom("0");
+
+//  adding new team members dynamically
+export const newTeamMemberTemplate = atom(() => ({
+  firstName: "",
+  lastName: "",
+  institute: "",
+}));

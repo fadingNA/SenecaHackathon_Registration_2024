@@ -1,13 +1,13 @@
-import React from 'react';
-import { Box } from '@mui/material';
-import { Button } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import RegistrationFormPersonalInformation from './registrationFormPortions/RegistrationFormPersonalInformation';
-import RegistrationFormEducation from './registrationFormPortions/RegistrationFormEducation';
-import RegistrationFormRegistrationType from './registrationFormPortions/RegistrationFormRegistrationType';
-import { Registration } from '../model/registration';
-import { useAtom } from 'jotai';
+import React from "react";
+import { Box } from "@mui/material";
+import { Button } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import RegistrationFormPersonalInformation from "./registrationFormPortions/RegistrationFormPersonalInformation";
+import RegistrationFormEducation from "./registrationFormPortions/RegistrationFormEducation";
+import RegistrationFormRegistrationType from "./registrationFormPortions/RegistrationFormRegistrationType";
+import { Registration } from "../model/registration";
+import { useAtom } from "jotai";
 import {
   firstNameAtom,
   lastNameAtom,
@@ -20,13 +20,14 @@ import {
   challengeNameAtom,
   isTeamCompleteAtom,
   semesterAtom,
+  teamMembersAtom,
   graduationYearAtom,
   senecaStatusAtom,
   pastHackathonParticipationAtom,
   finaleJoinPreferenceAtom,
   cellPhoneAtom,
-} from '../atoms/FormAtoms';
-import { useNavigate } from 'react-router-dom';
+} from "../atoms/FormAtoms";
+import { useNavigate } from "react-router-dom";
 
 function RegistrationForm() {
   // States for form fields
@@ -46,12 +47,20 @@ function RegistrationForm() {
   const [cellPhone] = useAtom(cellPhoneAtom);
   const [pastHackathonParticipation] = useAtom(pastHackathonParticipationAtom);
   const [finaleJoinPreference] = useAtom(finaleJoinPreferenceAtom);
-
+  const [teamMembers] = useAtom(teamMembersAtom);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const navigate = useNavigate();
 
   // Functionalities
+
+  const getCurrentDateInCanada = () => {
+    const date = new Date();
+    // 'America/Toronto' for Eastern Time
+    return date.toLocaleString("en-CA", { timeZone: "America/Toronto" });
+  };
+
+  const registeratDateCA = getCurrentDateInCanada();
 
   const isFormFilled = () => {
     if (
@@ -69,9 +78,14 @@ function RegistrationForm() {
       finaleJoinPreference &&
       cellPhone
     ) {
-      if (registrationType === 'Team' && teamName && isTeamComplete && senecaStatus) {
+      if (
+        registrationType === "Team" &&
+        teamName &&
+        isTeamComplete &&
+        senecaStatus
+      ) {
         return true;
-      } else if (registrationType === 'Individual') {
+      } else if (registrationType === "Individual") {
         return true;
       }
     }
@@ -88,7 +102,10 @@ function RegistrationForm() {
       program: program,
       collegeName: collegeName,
       registrationType: registrationType,
-      teamName: teamName,
+      team: {
+        teamName: teamName,
+        teamMembers: teamMembers,
+      },
       challengeName: challengeName,
       isTeamCompleted: isTeamComplete,
       semester: semester,
@@ -97,6 +114,7 @@ function RegistrationForm() {
       pastHackathonParticipation: pastHackathonParticipation,
       finaleJoinPreference: finaleJoinPreference,
       cellPhone: cellPhone,
+      registrationAtDate: registeratDateCA,
     });
     const userId = await participant.submitForm();
     navigate(`/success/${userId}`);
@@ -104,7 +122,12 @@ function RegistrationForm() {
   };
 
   return (
-    <Container onSubmit={(ev) => onSubmit(ev)} component="form" maxWidth="md" className="mb-5">
+    <Container
+      onSubmit={(ev) => onSubmit(ev)}
+      component="form"
+      maxWidth="md"
+      className="mb-5"
+    >
       <Typography variant="h1">Registration Form</Typography>
       {/* Personal Information */}
       <RegistrationFormPersonalInformation />
@@ -115,11 +138,18 @@ function RegistrationForm() {
       <RegistrationFormRegistrationType />
 
       {/* Button set */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 10,
+        }}
+      >
         <Button
           variant="contained"
           type="submit"
-          sx={{ width: '30%' }}
+          sx={{ width: "30%" }}
           disabled={!isFormFilled() || isSubmitted}
         >
           Submit

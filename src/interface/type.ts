@@ -2,11 +2,19 @@ export interface IRegistrationForm {
   firstName: string;
   lastName: string;
   email: string;
+  registrationAtDate: string;
   tShirtSize: string;
   program: string;
   collegeName?: string;
   registrationType: string;
-  teamName?: string;
+  team: {
+    teamName: string;
+    teamMembers: Array<{
+      firstName: string;
+      lastName: string;
+      institute: string;
+    }>;
+  };
   challengeName: string;
   isTeamCompleted?: boolean;
   semester?: number;
@@ -18,43 +26,46 @@ export interface IRegistrationForm {
 }
 
 export interface IParticipant {
-  first_name: string;
-  last_name: string;
   email: string;
-  cell_phone: string;
-  registrationType: string;
-  college: string;
-  program: string;
-  current_year: number;
-  teamName?: string;
-  teamRole?: string;
-  isTeamComplete: boolean;
-  tShirtSize: string;
-  challengeName: string;
-  discoveryMethod: string;
-  senecaStudentStatus: string;
-  graduationYear: number;
-  pastHackathonParticipation: boolean;
   finaleJoinPreference: string;
+  first_name: string;
+  grad_year: number;
+  isYourTeamComplete: string;
+  last_name: string;
+  participate_as: string;
+  program: string;
+  registrationDate: string;
+  semester: number;
+  seneca_student_status: string;
+  team: {
+    teamName: string;
+    teamMembers: Array<{
+      firstName: string;
+      lastName: string;
+      institute: string;
+    }>;
+  };
+  tshirt_size: string;
+  college: string;
 }
 
-export const RegisType = ['Team', 'Individual'];
+export const RegisType = ["Team", "Individual"];
 
-export const Challenge = ['Challenge1', 'Challenge2', 'Chellenge3'];
+export const Challenge = ["Challenge1", "Challenge2", "Chellenge3"];
 
-export const DiscoveryMethod = ['Social Media', 'Seneca', 'Other'];
+export const DiscoveryMethod = ["Social Media", "Seneca", "Other"];
 
-export const Preference = ['Virtual', 'In-person', 'Maybe'];
+export const Preference = ["Virtual", "In-person", "Maybe"];
 
-export const ShirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+export const ShirtSizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
-export const finaleJoinPreference = ['Yes', 'No', 'Maybe'];
+export const finaleJoinPreference = ["Yes", "No", "Maybe"];
 
-export const isTeamCompleteList = ['Yes', 'No'];
+export const isTeamCompleteList = ["Yes", "No"];
 
-export const senecaStudentStatus = ['Yes', 'No'];
+export const senecaStudentStatus = ["Yes", "No"];
 
-export const pastHackathonParticipationList = ['Yes', 'No'];
+export const pastHackathonParticipationList = ["Yes", "No"];
 
 export interface ChallengeSet {
   name: string;

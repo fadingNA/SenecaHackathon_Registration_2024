@@ -42,18 +42,18 @@ const GetAllParticipant: React.FC = () => {
   return (
     <section className="relative py-12 md:py-24 bg-gray-300">
       <div className="relative container px-4 mx-auto">
-        <h1 className="mb-4 text-4xl font-semibold tracking-tight sm:text-5xl font-heading">
+        <h1 className="mb-4 text-4xl font-semibold tracking-tight sm:text-5xl font-heading shadow-lg mb-5">
           {viewByTeam ? "Our Teams" : "Our Participants"}
         </h1>
-        <div className="mb-8 flex justify-center">
+        <div className="mb-8 flex justify-start">
           <button
-            className="mr-4 rounded bg-blue-500 px-4 py-2 text-white"
+            className="mr-4 rounded bg-gray-900 px-4 py-2 text-white"
             onClick={() => setViewByTeam(false)}
           >
             View by Participant
           </button>
           <button
-            className="rounded bg-green-500 px-4 py-2 text-white"
+            className="rounded bg-red-600 px-4 py-2 text-white"
             onClick={() => setViewByTeam(true)}
           >
             View by Team

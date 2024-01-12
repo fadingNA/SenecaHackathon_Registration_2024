@@ -16,7 +16,7 @@ import {
   pastHackathonParticipationAtom,
   numberOfTeamMembersAtom,
   teamMembersAtom,
-  newTeamMemberTemplate,
+
 } from "../../atoms/FormAtoms";
 import {
   ShirtSizes,

@@ -18,14 +18,28 @@ export const createParticipant = async (participant: IRegistrationForm) => {
       last_name: participant.lastName,
       college: participant.collegeName,
       program: participant.program,
+      registrationDate: participant.registrationAtDate,
       semester: participant.semester,
       grad_year: participant.graduationYear,
       email: participant.email,
-      teamName: participant.teamName,
+      team: {
+        teamName: participant.team.teamName,
+        teamMembers: participant.team.teamMembers.map((member) => ({
+          firstName: member.firstName,
+          lastName: member.lastName,
+          institute: member.institute,
+        })),
+      },
+      cell_phone: participant.cellPhone,
+      isYourTeamComplete: participant.isTeamCompleted,
+      seneca_student_status: participant.senecaStudentStatus,
       tshirt_size: participant.tShirtSize,
       participate_as: participant.registrationType,
+      challenge: participant.challengeName,
+      finaleJoinPreference: participant.finaleJoinPreference,
     });
     console.log("Participant created with ID:", docRef.id);
+    console.log("Participant created with Data:", docRef)
     return docRef.id;
   } catch (error) {
     console.error("Error adding document: ", error);

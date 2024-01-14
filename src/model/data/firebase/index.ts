@@ -39,7 +39,7 @@ export const createParticipant = async (participant: IRegistrationForm) => {
       finaleJoinPreference: participant.finaleJoinPreference,
     });
     console.log("Participant created with ID:", docRef.id);
-    console.log("Participant created with Data:", docRef)
+    console.log("Participant created with Data:", docRef);
     return docRef.id;
   } catch (error) {
     console.error("Error adding document: ", error);

@@ -8,7 +8,7 @@ import React from "react";
 import { IParticipant } from "../../../src/interface/type";
 
 type TeamCardProps = {
-  team: IParticipant["team"]; 
+  team: IParticipant["team"];
 };
 
 const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
@@ -19,9 +19,10 @@ const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
         {team?.teamMembers.map((member, index) => (
           <p key={index}>
             <p className="font-medium ">Member {index + 1}</p>
-            <p>Firstname: {member?.firstName}</p>
-            <p>Lastname {member?.lastName}</p>
-            <p>Insititute {member?.institute}</p>
+            <p>
+              Name: {member?.firstName} {member?.lastName}
+            </p>
+            <p>Insititute name: {member?.institute}</p>
           </p>
         ))}
       </div>

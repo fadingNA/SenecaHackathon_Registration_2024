@@ -11,8 +11,9 @@ import ParticipantCard from "./ParticipantCard";
 import TeamCard from "./TeamCard";
 import { IParticipant } from "../../../src/interface/type";
 import { ParticipantService } from "../../model/participant";
+import { convertToCSV, downloadCSV } from "./CsvConversion";
 
-const GetAllParticipant: React.FC = () => {
+const GetAllParticipant = () => {
   const [participants, setParticipants] = useState<IParticipant[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [viewByTeam, setViewByTeam] = useState<boolean>(false);
@@ -39,10 +40,17 @@ const GetAllParticipant: React.FC = () => {
     return <div>Loading...</div>;
   }
 
+  const handleDownloadParticipantCSV = () => {
+    const csvString: string = convertToCSV(participants);
+    console.log("csvString", csvString);
+    const newDate = new Date();
+    downloadCSV(csvString, `participants-${newDate}.csv`);
+  };
+
   return (
     <section className="relative py-12 md:py-24 bg-gray-300">
       <div className="relative container px-4 mx-auto">
-        <h1 className="mb-4 text-4xl font-semibold tracking-tight sm:text-5xl font-heading shadow-lg mb-5">
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl font-heading shadow-sm mb-5">
           {viewByTeam ? "Our Teams" : "Our Participants"}
         </h1>
         <div className="mb-8 flex justify-start">
@@ -53,12 +61,19 @@ const GetAllParticipant: React.FC = () => {
             View by Participant
           </button>
           <button
-            className="rounded bg-red-600 px-4 py-2 text-white"
+            className="mr-4 rounded bg-gray-50 text-gray-900 px-4 py-2"
             onClick={() => setViewByTeam(true)}
           >
             View by Team
           </button>
+          <button
+            className="mr-4 rounded absolute right-0 bg-cyan-800 px-4 py-2 text-white"
+            onClick={() => handleDownloadParticipantCSV()}
+          >
+            Download CSV
+          </button>
         </div>
+
         <div className="flex flex-wrap -mx-4">
           {viewByTeam
             ? participants

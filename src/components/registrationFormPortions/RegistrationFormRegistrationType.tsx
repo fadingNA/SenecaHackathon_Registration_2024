@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import CustomFormLabel from "../utils/CustomFormLabel";
 import FormRadioGroup from "../utils/FormRadioGroup";
 import FormSelect from "../utils/FormSelect";
+import FormNumberField from "../utils/FormNumberField";
 import React from "react";
 
 import { useAtom } from "jotai";
@@ -16,6 +17,9 @@ import {
   pastHackathonParticipationAtom,
   numberOfTeamMembersAtom,
   teamMembersAtom,
+  senecaAlumniAtom,
+  senecaAlumniYearAtom,
+  senecaAlumniProgramAtom,
 } from "../../atoms/FormAtoms";
 import {
   ShirtSizes,
@@ -25,6 +29,7 @@ import {
   senecaStudentStatus,
   Preference,
   pastHackathonParticipationList,
+  isAluminieList,
 } from "../../interface/type";
 import FormTextField from "../utils/FormTextField";
 
@@ -41,9 +46,10 @@ function RegistrationFormRegistrationType() {
   const [pastHackathonParticipation, setPastHackathonParticipation] = useAtom(
     pastHackathonParticipationAtom
   );
-
+  const [senecaAlumini, setSenecaAlumini] = useAtom(senecaAlumniAtom);
+  const [aluminiYear, setAluminiYear] = useAtom(senecaAlumniYearAtom);
+  const [aluminiProgram, setAluminiProgram] = useAtom(senecaAlumniProgramAtom);
   const [teamMembers, setTeamMembers] = useAtom(teamMembersAtom);
-
   const [numberOfTeamMembers, setNumberOfTeamMembers] = useAtom(
     numberOfTeamMembersAtom
   );
@@ -72,6 +78,40 @@ function RegistrationFormRegistrationType() {
     <Box sx={{ marginTop: 6 }}>
       <CustomFormLabel>Event-related Information</CustomFormLabel>
       <Box sx={{ marginLeft: 4, marginTop: 3 }}>
+        <FormRadioGroup
+          id="isAlumini"
+          label="Are you a Seneca Alumini?"
+          labelId="senecaAlumini"
+          variable={senecaAlumini}
+          setVariable={setSenecaAlumini}
+          valueList={isAluminieList}
+          defaultValue=""
+          sx={{ marginRight: 1 }}
+        />
+        {senecaAlumini == "Yes" && (
+          <>
+            <FormNumberField
+              id="aluminiGraduationYear"
+              name="aluminiGraduationYear"
+              label="Graduation Year"
+              placeholder="2019"
+              setVariable={setAluminiYear}
+              variable={aluminiYear}
+              defaultValue=""
+              sx={{ marginRight: 1 }}
+            />
+            <FormTextField
+              id="aluminiProgram"
+              name="aluminiProgram"
+              label="Program name"
+              placeholder="Computer Programming and Analysis"
+              setVariable={setAluminiProgram}
+              variable={aluminiProgram}
+              defaultValue=""
+              sx={{ marginRight: 1 }}
+            />
+          </>
+        )}
         <FormRadioGroup
           id="pastHackathonParticipation"
           label="Have you participated in any Seneca hackathon before?"

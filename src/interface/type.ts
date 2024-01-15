@@ -25,6 +25,9 @@ export interface IRegistrationForm {
   pastHackathonParticipation: boolean;
   finaleJoinPreference: string;
   cellPhone: string;
+  alumni: string;
+  aluminiYear?: number;
+  aluminiProgram?: string;
 }
 
 export interface IParticipant {
@@ -51,6 +54,10 @@ export interface IParticipant {
   };
   tshirt_size: string;
   college: string;
+  alumni: string;
+  aluminiYear?: number;
+  aluminiProgram?: string;
+  challenge: string;
 }
 
 export const RegisType = ["Team", "Individual"];
@@ -70,6 +77,8 @@ export const isTeamCompleteList = ["Yes", "No"];
 export const senecaStudentStatus = ["Yes", "No"];
 
 export const pastHackathonParticipationList = ["Yes", "No"];
+
+export const isAluminieList = ["Yes", "No"];
 
 export interface ChallengeSet {
   name: string;

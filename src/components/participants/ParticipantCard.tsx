@@ -16,9 +16,8 @@ type ParticipantCardProps = {
 };
 
 const ParticipantCard: React.FC<ParticipantCardProps> = ({ participant }) => {
-  const formattedDate = new Date(
-    participant.registrationDate
-  ).toLocaleDateString();
+  const [date, time] = participant.registrationDate.split(", ");
+  const formattedDate = date + " " + time;
   return (
     <div className={divKey}>
       <div className={divKey2}>

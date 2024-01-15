@@ -28,6 +28,9 @@ export class Registration implements IRegistrationForm {
   pastHackathonParticipation: boolean;
   finaleJoinPreference: string;
   cellPhone: string;
+  alumni: string;
+  aluminiYear?: number;
+  aluminiProgram?: string;
 
   constructor(formInput: IRegistrationForm) {
     this.firstName = formInput.firstName || "";
@@ -48,6 +51,9 @@ export class Registration implements IRegistrationForm {
       formInput.pastHackathonParticipation || false;
     this.finaleJoinPreference = formInput.finaleJoinPreference || "";
     this.cellPhone = formInput.cellPhone || "";
+    this.alumni = formInput.alumni || "";
+    this.aluminiYear = formInput.aluminiYear || 0;
+    this.aluminiProgram = formInput.aluminiProgram || "";
   }
   async submitForm() {
     if (this !== undefined) {

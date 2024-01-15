@@ -26,6 +26,9 @@ import {
   pastHackathonParticipationAtom,
   finaleJoinPreferenceAtom,
   cellPhoneAtom,
+  senecaAlumniAtom,
+  senecaAlumniYearAtom,
+  senecaAlumniProgramAtom,
 } from "../atoms/FormAtoms";
 import { useNavigate } from "react-router-dom";
 
@@ -49,6 +52,9 @@ function RegistrationForm() {
   const [finaleJoinPreference] = useAtom(finaleJoinPreferenceAtom);
   const [teamMembers] = useAtom(teamMembersAtom);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [alumini] = useAtom(senecaAlumniAtom);
+  const [aluminiYear] = useAtom(senecaAlumniYearAtom);
+  const [aluminiProgram] = useAtom(senecaAlumniProgramAtom);
 
   const navigate = useNavigate();
 
@@ -115,6 +121,9 @@ function RegistrationForm() {
       finaleJoinPreference: finaleJoinPreference,
       cellPhone: cellPhone,
       registrationAtDate: registeratDateCA,
+      alumni: alumini,
+      aluminiYear: aluminiYear,
+      aluminiProgram: aluminiProgram,
     });
     const userId = await participant.submitForm();
     navigate(`/success/${userId}`);

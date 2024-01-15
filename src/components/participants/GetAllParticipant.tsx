@@ -67,7 +67,7 @@ const GetAllParticipant = () => {
             View by Team
           </button>
           <button
-            className="mr-4 rounded absolute right-0 bg-cyan-800 px-4 py-2 text-white"
+            className="mr-4 rounded  right-0 bg-cyan-800 px-4 py-2 text-white"
             onClick={() => handleDownloadParticipantCSV()}
           >
             Download CSV

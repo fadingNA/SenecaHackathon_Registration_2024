@@ -23,7 +23,7 @@ function RegistrationFormEducation() {
           id="institution"
           name="institution"
           label="College/University"
-          placeholder="Seneca College"
+          placeholder="Seneca Polytechnic"
           setVariable={setInstitution}
           variable={institution}
           defaultValue=""

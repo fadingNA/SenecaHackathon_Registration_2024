@@ -3,7 +3,7 @@ import CustomFormLabel from "../utils/CustomFormLabel";
 import FormRadioGroup from "../utils/FormRadioGroup";
 import FormSelect from "../utils/FormSelect";
 import React from "react";
-import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+
 import { useAtom } from "jotai";
 import {
   isTeamCompleteAtom,
@@ -16,7 +16,6 @@ import {
   pastHackathonParticipationAtom,
   numberOfTeamMembersAtom,
   teamMembersAtom,
-
 } from "../../atoms/FormAtoms";
 import {
   ShirtSizes,
@@ -67,15 +66,6 @@ function RegistrationFormRegistrationType() {
       i === index ? { ...member, [key]: value } : member
     );
     setTeamMembers(updatedTeamMembers);
-  };
-
-  const handleRemovePerson = (index: Number) => {
-    const updatedTeamMembers = teamMembers.filter((_, i) => i !== index);
-    setTeamMembers(updatedTeamMembers);
-
-    if (updatedTeamMembers.length < parseInt(numberOfTeamMembers, 10)) {
-      setNumberOfTeamMembers(updatedTeamMembers.length.toString());
-    }
   };
 
   return (
@@ -187,15 +177,30 @@ function RegistrationFormRegistrationType() {
                     variable={member.institute}
                     defaultValue=""
                   />
-                  {teamMembers.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => handleRemovePerson(index)}
-                      className="relative ml-3 mt-9 sm:absolute md:ml-0 sm:mt-0 sm:top-1/2 sm:-translate-y-1/2"
-                    >
-                      <PersonRemoveIcon />
-                    </button>
-                  )}
+                  <FormTextField
+                    id={`email-${index}`}
+                    name="email"
+                    label="Email"
+                    placeholder="Email of your team member"
+                    setVariable={(value: any) =>
+                      handleTeamMemberChange(index, "email", value)
+                    }
+                    variable={member.email}
+                    defaultValue=""
+                    sx={{ marginRight: 1 }}
+                  />
+                  <FormSelect
+                    id={`swagSize-${index}`}
+                    label="SWAG Size"
+                    labelId={`swagSizeLabel-${index}`}
+                    variable={member.swagSize}
+                    setVariable={(value: any) =>
+                      handleTeamMemberChange(index, "swagSize", value)
+                    }
+                    valueList={ShirtSizes}
+                    defaultValue=""
+                    sx={{ marginRight: 1 }}
+                  />
                 </div>
               ))}
             </div>

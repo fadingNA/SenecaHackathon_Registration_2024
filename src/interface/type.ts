@@ -13,6 +13,8 @@ export interface IRegistrationForm {
       firstName: string;
       lastName: string;
       institute: string;
+      email?: string;
+      swagSize?: string;
     }>;
   };
   challengeName: string;
@@ -43,6 +45,8 @@ export interface IParticipant {
       firstName: string;
       lastName: string;
       institute: string;
+      email?: string;
+      swagSize?: string;
     }>;
   };
   tshirt_size: string;

@@ -6,22 +6,20 @@ import { IParticipant } from "../../../src/interface/type";
 
 export const convertToCSV = (objArray: IParticipant[]) => {
   const columns = [
-    "email",
-    "finaleJoinPreference",
     "first_name",
+    "last_name",
+    "email",
+    "registrationDate",
+    "finaleJoinPreference",
     "grad_year",
     "isYourTeamComplete",
-    "last_name",
     "participate_as",
+    "teamName",
     "program",
-    "registrationDate",
     "semester",
     "seneca_student_status",
-    "teamName",
-    "teamMembers",
     "tshirt_size",
     "college",
-    "registrationDate",
   ];
 
   // const columns = ['first_name', 'last_name', 'email', 'college', ... ]; // Define the custom order
@@ -30,59 +28,54 @@ export const convertToCSV = (objArray: IParticipant[]) => {
 
   // Create header row from columns
   let csvString = columns.join(",") + "\n";
-
-  // Map each participant object to a CSV row
   objArray.forEach((participant) => {
-    let line = columns
+    let participantLine = columns
       .map((key) => {
-        if (key === "team") {
-          let team_data = null;
-          if (participant.team) {
-            team_data = participant.team.teamName;
-            if (participant.team.teamMembers.length > 0) {
-              team_data += " (";
-              team_data += participant.team.teamMembers
-                .map((member) => {
-                  return `${member.firstName} ${member.lastName}`;
-                })
-                .join("|");
-              team_data += ")";
-            }
-          }
-          // Handle nested 'teamName'
-          return team_data ? team_data : "NA";
-        } else if (key === "teamMembers") {
-          // Handle nested 'teamMembers'
-          return participant.team?.teamMembers
-            .map((member) => {
-              return `${member.firstName} ${member.lastName}`;
-            })
-            .join("|");
-        } else if (key === "registrationDate") {
-          // Handle nested 'registrationDate'
-          try {
-            const date = new Date(participant.registrationDate);
-            return `${date.getFullYear()}-${String(
-              date.getMonth() + 1
-            ).padStart(2, "0")}-${String(date.getDate()).padStart(
-              2,
-              "0"
-            )}::${String(date.getHours()).padStart(2, "0")}:${String(
-              date.getMinutes()
-            ).padStart(2, "0")}`;
-          } catch (err) {
-            console.log(err);
-          }
+        if (key === "registrationDate") {
+          const [date, time] = participant.registrationDate.split(", ");
+          return date + " " + time;
+        } else if (key === "teamName") {
+          return participant.team ? participant.team.teamName : "NA";
         } else {
-          // Access the properties using type assertion
-          const value = participant[key as keyof IParticipant];
+          const value = participant[key as keyof typeof participant];
           return value !== undefined && value !== null ? value : "NA";
         }
       })
       .join(",");
 
-    csvString += line + "\n";
+    csvString += participantLine + "\n";
+
+    const teamName = participant.team?.teamName;
+
+    if (participant.team && participant.team.teamMembers) {
+      console.log("teamName", participant.team.teamName);
+      participant.team.teamMembers.forEach((member) => {
+        let teamMemberLine = columns
+          .map((key) => {
+            switch (key) {
+              case "first_name":
+                return member.firstName;
+              case "last_name":
+                return member.lastName;
+              case "tshirt_size":
+                return member.swagSize;
+              case "email":
+                return member.email;
+              case "college":
+                return member.institute;
+              case "teamName":
+                return teamName;
+              default:
+                return "NA";
+            }
+          })
+          .join(",");
+
+        csvString += teamMemberLine + "\n";
+      });
+    }
   });
+
   return csvString;
 };
 

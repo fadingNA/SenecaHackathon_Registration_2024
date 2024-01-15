@@ -4,25 +4,43 @@ Display participant information
 Name, email, program, college, registration date
 Data from firebase
 */
-
 import React from "react";
 import { IParticipant } from "../../../src/interface/type";
+import SchoolIcon from "@mui/icons-material/School";
+import EmailIcon from "@mui/icons-material/Email";
+import BookIcon from "@mui/icons-material/Book";
+import EventIcon from "@mui/icons-material/Event";
 
 type ParticipantCardProps = {
   participant: IParticipant;
 };
 
 const ParticipantCard: React.FC<ParticipantCardProps> = ({ participant }) => {
+  const formattedDate = new Date(
+    participant.registrationDate
+  ).toLocaleDateString();
   return (
     <div className={divKey}>
       <div className={divKey2}>
-        <h3 className="text-xl font-bold">
+        <h3 className="text-2xl font-semibold text-gray-700 mb-2">
           {participant.first_name} {participant.last_name}
         </h3>
-        <p>Institute: {participant.college}</p>
-        <p>Email: {participant.email}</p>
-        <p>Program: {participant.program}</p>
-        <p>Created date: {participant.registrationDate}</p>
+        <div className="flex items-center text-sm mb-1">
+          <SchoolIcon className="mr-2 text-red-600" />
+          <span>Institute: {participant.college}</span>
+        </div>
+        <div className="flex items-center text-sm mb-1">
+          <EmailIcon className="mr-2 text-red-600" />
+          <span>Email: {participant.email}</span>
+        </div>
+        <div className="flex items-center text-sm mb-1">
+          <BookIcon className="mr-2 text-red-600" />
+          <span>Program: {participant.program}</span>
+        </div>
+        <div className="flex items-center text-sm mb-1">
+          <EventIcon className="mr-2 text-red-600" />
+          <span>Created date: {formattedDate}</span>
+        </div>
       </div>
     </div>
   );

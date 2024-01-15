@@ -19,6 +19,9 @@ export const semesterAtom = atom(3);
 export const pastHackathonParticipationAtom = atom(false);
 export const finaleJoinPreferenceAtom = atom("");
 export const registrationTypeAtom = atom("");
+export const senecaAlumniAtom = atom("");
+export const senecaAlumniYearAtom = atom(2023);
+export const senecaAlumniProgramAtom = atom("");
 
 // Non add
 // Atom for team name

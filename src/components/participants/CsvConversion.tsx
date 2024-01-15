@@ -10,6 +10,7 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "last_name",
     "email",
     "registrationDate",
+    "challengeSet",
     "finaleJoinPreference",
     "grad_year",
     "isYourTeamComplete",
@@ -20,6 +21,9 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "seneca_student_status",
     "tshirt_size",
     "college",
+    "alumni",
+    "aluminiYear",
+    "aluminiProgram",
   ];
 
   // const columns = ['first_name', 'last_name', 'email', 'college', ... ]; // Define the custom order
@@ -36,6 +40,8 @@ export const convertToCSV = (objArray: IParticipant[]) => {
           return date + " " + time;
         } else if (key === "teamName") {
           return participant.team ? participant.team.teamName : "NA";
+        } else if (key === "challengeSet") {
+          return participant.challenge ? participant.challenge : "NA";
         } else {
           const value = participant[key as keyof typeof participant];
           return value !== undefined && value !== null ? value : "NA";
@@ -46,6 +52,9 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     csvString += participantLine + "\n";
 
     const teamName = participant.team?.teamName;
+    const challengeName = participant.challenge;
+
+    console.log("challengeName", challengeName);
 
     if (participant.team && participant.team.teamMembers) {
       console.log("teamName", participant.team.teamName);
@@ -65,6 +74,8 @@ export const convertToCSV = (objArray: IParticipant[]) => {
                 return member.institute;
               case "teamName":
                 return teamName;
+              case "challengeSet":
+                return challengeName;
               default:
                 return "NA";
             }

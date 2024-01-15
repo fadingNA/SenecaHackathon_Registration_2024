@@ -39,6 +39,9 @@ export const createParticipant = async (participant: IRegistrationForm) => {
       participate_as: participant.registrationType,
       challenge: participant.challengeName,
       finaleJoinPreference: participant.finaleJoinPreference,
+      alumni: participant.alumni,
+      aluminiYear: participant.aluminiYear,
+      aluminiProgram: participant.aluminiProgram,
     });
     console.log("Participant created with ID:", docRef.id);
     console.log("Participant created with Data:", docRef);

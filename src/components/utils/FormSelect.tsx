@@ -3,8 +3,11 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  InputLabel,
+  SxProps,
+  Theme,
+  FormLabel, // import FormLabel from Material UI
 } from "@mui/material";
-import { InputLabel, SxProps, Theme } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 
 interface FormSelectProps {
@@ -22,6 +25,7 @@ interface FormSelectProps {
   required?: boolean;
   defaultValue: string | null;
   valueList: Array<string | number>;
+  formLabel?: string; // optional prop for the form label text
 }
 
 function FormSelect({
@@ -36,6 +40,7 @@ function FormSelect({
   label,
   defaultValue,
   valueList,
+  formLabel, // destructure the formLabel from props
 }: FormSelectProps) {
   const conditionalSetFunction = (
     event: SelectChangeEvent<string | number | null>
@@ -52,27 +57,32 @@ function FormSelect({
   };
 
   return (
-    <FormControl
-      sx={{ width: "30%", minWidth: "240px", marginTop: 3, ...sx }}
-      className={`${className}`}
-      required={required == false ? false : true}
-      disabled={disabled ? disabled : false}
-    >
-      <InputLabel id={labelId}>{label}</InputLabel>
-      <Select
-        labelId={labelId}
-        id={id}
-        value={variable ? variable : defaultValue}
-        label="Type"
-        onChange={(event) => conditionalSetFunction(event)}
+    <>
+      <FormLabel className="block -mb-3 mt-2">
+        {formLabel ? formLabel : label}
+      </FormLabel>
+      <FormControl
+        sx={{ width: "30%", minWidth: "240px", marginTop: 4, ...sx }}
+        className={`${className}`}
+        required={required == false ? false : true}
+        disabled={disabled ? disabled : false}
       >
-        {valueList.map((value: number | string) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+        <InputLabel id={labelId}>{label}</InputLabel>
+        <Select
+          labelId={labelId}
+          id={id}
+          value={variable ? variable : defaultValue}
+          label="Type"
+          onChange={(event) => conditionalSetFunction(event)}
+        >
+          {valueList.map((value: number | string) => (
+            <MenuItem key={value} value={value}>
+              {value}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </>
   );
 }
 

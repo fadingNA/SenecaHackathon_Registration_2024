@@ -4,6 +4,7 @@ import FormRadioGroup from "../utils/FormRadioGroup";
 import FormSelect from "../utils/FormSelect";
 import FormNumberField from "../utils/FormNumberField";
 import React from "react";
+import FormLabel from "@mui/material/FormLabel";
 
 import { useAtom } from "jotai";
 import {
@@ -114,7 +115,7 @@ function RegistrationFormRegistrationType() {
         )}
         <FormRadioGroup
           id="pastHackathonParticipation"
-          label="Have you participated in any Seneca hackathon before?"
+          label="Have you participated in any of the previous Seneca Hackathon events?"
           labelId="senecaStatus"
           variable={pastHackathonParticipation}
           setVariable={setPastHackathonParticipation}
@@ -267,9 +268,11 @@ function RegistrationFormRegistrationType() {
             />
           </>
         )}
+
         <FormSelect
           label="Challenge Set"
           labelId="challengeName"
+          formLabel="Select your preferred challenge set? *"
           variable={challengeName}
           setVariable={setChallengeName}
           valueList={Challenge}
@@ -278,19 +281,20 @@ function RegistrationFormRegistrationType() {
           id="challengeName"
         />
         <FormRadioGroup
-          label="How would you like to join the finale?"
+          label="How would you like to join the finale? "
           labelId="finaleJoinPreference"
           variable={finaleJoinPreference}
           setVariable={setFinaleJoinPreference}
           valueList={Preference}
           defaultValue=""
-          sx={{ marginRight: 1 }}
+          sx={{ marginRight: 1, position: "relative", left: 0 }}
           id="finaleJoinPreference"
         />
         <FormSelect
           id="swagSize"
           label="SWAG Size"
           labelId="swagSize"
+          formLabel="Select your apparel size? *"
           variable={tShirtSize}
           setVariable={setTShirtSize}
           valueList={ShirtSizes}

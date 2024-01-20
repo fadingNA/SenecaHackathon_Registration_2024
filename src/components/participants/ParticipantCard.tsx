@@ -16,8 +16,6 @@ type ParticipantCardProps = {
 };
 
 const ParticipantCard: React.FC<ParticipantCardProps> = ({ participant }) => {
-  const [date, time] = participant.registrationDate.split(", ");
-  const formattedDate = date + " " + time;
   return (
     <div className={divKey}>
       <div className={divKey2}>
@@ -38,7 +36,7 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({ participant }) => {
         </div>
         <div className="flex items-center text-sm mb-1">
           <EventIcon className="mr-2 text-red-600" />
-          <span>Created date: {formattedDate}</span>
+          <span>Registration date: {participant.registrationDate}</span>
         </div>
       </div>
     </div>

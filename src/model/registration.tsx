@@ -28,7 +28,7 @@ export class Registration implements IRegistrationForm {
   pastHackathonParticipation: boolean;
   finaleJoinPreference: string;
   cellPhone: string;
-  alumni: string;
+  alumini: string;
   aluminiYear?: number;
   aluminiProgram?: string;
 
@@ -51,7 +51,7 @@ export class Registration implements IRegistrationForm {
       formInput.pastHackathonParticipation || false;
     this.finaleJoinPreference = formInput.finaleJoinPreference || "";
     this.cellPhone = formInput.cellPhone || "";
-    this.alumni = formInput.alumni || "";
+    this.alumini = formInput.alumini || "";
     this.aluminiYear = formInput.aluminiYear || 0;
     this.aluminiProgram = formInput.aluminiProgram || "";
   }

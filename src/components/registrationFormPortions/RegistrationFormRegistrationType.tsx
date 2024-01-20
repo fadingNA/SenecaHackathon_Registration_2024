@@ -8,7 +8,7 @@ import React from "react";
 import { useAtom } from "jotai";
 import {
   isTeamCompleteAtom,
-  challengeNameAtom,
+  //challengeNameAtom,
   tShirtSizeAtom,
   registrationTypeAtom,
   teamNameAtom,
@@ -24,7 +24,7 @@ import {
 import {
   ShirtSizes,
   RegisType,
-  Challenge,
+  //Challenge,
   isTeamCompleteList,
   senecaStudentStatus,
   Preference,
@@ -35,7 +35,7 @@ import FormTextField from "../utils/FormTextField";
 
 function RegistrationFormRegistrationType() {
   const [isTeamComplete, setIsTeamComplete] = useAtom(isTeamCompleteAtom);
-  const [challengeName, setChallengeName] = useAtom(challengeNameAtom);
+  //const [challengeName, setChallengeName] = useAtom(challengeNameAtom);
   const [tShirtSize, setTShirtSize] = useAtom(tShirtSizeAtom);
   const [registrationType, setRegistrationType] = useAtom(registrationTypeAtom);
   const [teamName, setTeamName] = useAtom(teamNameAtom);
@@ -267,7 +267,7 @@ function RegistrationFormRegistrationType() {
             />
           </>
         )}
-
+        {/*
         <FormSelect
           label="Challenge Set"
           labelId="challengeName"
@@ -279,6 +279,8 @@ function RegistrationFormRegistrationType() {
           sx={{ marginRight: 1 }}
           id="challengeName"
         />
+
+        */}
         <FormRadioGroup
           label="How would you like to join the finale? "
           labelId="finaleJoinPreference"

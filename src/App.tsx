@@ -19,7 +19,7 @@ function App() {
       element: <RegistrationForm></RegistrationForm>,
     },
     {
-      path: '/getallparticipant',
+      path: '/gapfb',
       element: <GetAllParticipant></GetAllParticipant>,
     },
   ]);

@@ -8,7 +8,7 @@ import React from "react";
 import { useAtom } from "jotai";
 import {
   isTeamCompleteAtom,
-  challengeNameAtom,
+  //challengeNameAtom,
   tShirtSizeAtom,
   registrationTypeAtom,
   teamNameAtom,
@@ -24,7 +24,7 @@ import {
 import {
   ShirtSizes,
   RegisType,
-  Challenge,
+  //Challenge,
   isTeamCompleteList,
   senecaStudentStatus,
   Preference,
@@ -35,7 +35,7 @@ import FormTextField from "../utils/FormTextField";
 
 function RegistrationFormRegistrationType() {
   const [isTeamComplete, setIsTeamComplete] = useAtom(isTeamCompleteAtom);
-  const [challengeName, setChallengeName] = useAtom(challengeNameAtom);
+  //const [challengeName, setChallengeName] = useAtom(challengeNameAtom);
   const [tShirtSize, setTShirtSize] = useAtom(tShirtSizeAtom);
   const [registrationType, setRegistrationType] = useAtom(registrationTypeAtom);
   const [teamName, setTeamName] = useAtom(teamNameAtom);
@@ -114,7 +114,7 @@ function RegistrationFormRegistrationType() {
         )}
         <FormRadioGroup
           id="pastHackathonParticipation"
-          label="Have you participated in any Seneca hackathon before?"
+          label="Have you participated in any of the previous Seneca Hackathon events?"
           labelId="senecaStatus"
           variable={pastHackathonParticipation}
           setVariable={setPastHackathonParticipation}
@@ -267,9 +267,11 @@ function RegistrationFormRegistrationType() {
             />
           </>
         )}
+        {/*
         <FormSelect
           label="Challenge Set"
           labelId="challengeName"
+          formLabel="Select your preferred challenge set? *"
           variable={challengeName}
           setVariable={setChallengeName}
           valueList={Challenge}
@@ -277,20 +279,23 @@ function RegistrationFormRegistrationType() {
           sx={{ marginRight: 1 }}
           id="challengeName"
         />
+
+        */}
         <FormRadioGroup
-          label="How would you like to join the finale?"
+          label="How would you like to join the finale? "
           labelId="finaleJoinPreference"
           variable={finaleJoinPreference}
           setVariable={setFinaleJoinPreference}
           valueList={Preference}
           defaultValue=""
-          sx={{ marginRight: 1 }}
+          sx={{ marginRight: 1, position: "relative", left: 0 }}
           id="finaleJoinPreference"
         />
         <FormSelect
           id="swagSize"
           label="SWAG Size"
           labelId="swagSize"
+          formLabel="Select your apparel size? *"
           variable={tShirtSize}
           setVariable={setTShirtSize}
           valueList={ShirtSizes}

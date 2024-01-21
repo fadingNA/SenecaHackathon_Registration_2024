@@ -121,7 +121,7 @@ function RegistrationForm() {
       finaleJoinPreference: finaleJoinPreference,
       cellPhone: cellPhone,
       registrationAtDate: registeratDateCA,
-      alumni: alumini,
+      alumini: alumini,
       aluminiYear: aluminiYear,
       aluminiProgram: aluminiProgram,
     });

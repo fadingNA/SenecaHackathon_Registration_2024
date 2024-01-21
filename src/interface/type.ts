@@ -25,7 +25,7 @@ export interface IRegistrationForm {
   pastHackathonParticipation: boolean;
   finaleJoinPreference: string;
   cellPhone: string;
-  alumni: string;
+  alumini: string;
   aluminiYear?: number;
   aluminiProgram?: string;
 }
@@ -54,7 +54,7 @@ export interface IParticipant {
   };
   tshirt_size: string;
   college: string;
-  alumni: string;
+  alumini: string;
   aluminiYear?: number;
   aluminiProgram?: string;
   challenge: string;
@@ -66,7 +66,7 @@ export const Challenge = ["Challenge1", "Challenge2", "Chellenge3"];
 
 export const DiscoveryMethod = ["Social Media", "Seneca", "Other"];
 
-export const Preference = ["Virtual", "In-person", "Maybe"];
+export const Preference = ["Virtual", "In-person"];
 
 export const ShirtSizes = ["XS", "S", "M", "L", "XL", "XXL"];
 

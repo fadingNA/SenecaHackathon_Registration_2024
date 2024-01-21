@@ -36,8 +36,7 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     let participantLine = columns
       .map((key) => {
         if (key === "registrationDate") {
-          const [date, time] = participant.registrationDate.split(", ");
-          return date + " " + time;
+          return participant.registrationDate;
         } else if (key === "teamName") {
           return participant.team ? participant.team.teamName : "NA";
         } else if (key === "challengeSet") {

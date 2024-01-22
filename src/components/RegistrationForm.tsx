@@ -8,6 +8,7 @@ import RegistrationFormEducation from "./registrationFormPortions/RegistrationFo
 import RegistrationFormRegistrationType from "./registrationFormPortions/RegistrationFormRegistrationType";
 import { Registration } from "../model/registration";
 import { sendEmailConfirmation } from "./SendConfirmation/EmailConfirmation";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useAtom } from "jotai";
 import {
   firstNameAtom,
@@ -56,6 +57,10 @@ function RegistrationForm() {
   const [alumini] = useAtom(senecaAlumniAtom);
   const [aluminiYear] = useAtom(senecaAlumniYearAtom);
   const [aluminiProgram] = useAtom(senecaAlumniProgramAtom);
+  const [isReCAPVerified, setIsReCAPVerified] = React.useState(false);
+
+  const onReCAPTCHAChange = (value: any) =>
+    setIsReCAPVerified(value ? true : false);
 
   const navigate = useNavigate();
 
@@ -78,6 +83,7 @@ function RegistrationForm() {
       semester &&
       graduationYear &&
       pastHackathonParticipation &&
+      isReCAPVerified &&
       cellPhone
     ) {
       if (
@@ -153,6 +159,12 @@ function RegistrationForm() {
 
       <RegistrationFormRegistrationType />
 
+      <Box sx={{ display: "flex", justifyContent: "center", marginY: 2 }}>
+        <ReCAPTCHA
+          sitekey="6Lc18VgpAAAAADE5aFI8Y7gUl7gIL10fGj-VoiRi"
+          onChange={onReCAPTCHAChange}
+        />
+      </Box>
       {/* Button set */}
       <Box
         sx={{

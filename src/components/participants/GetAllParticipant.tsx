@@ -13,7 +13,7 @@ import { IParticipant } from "../../../src/interface/type";
 import { ParticipantService } from "../../model/participant";
 import { convertToCSV, downloadCSV } from "./CsvConversion";
 import { AuthService } from "./Authenticate";
-import { auth } from "../../model/data/firebase/Firebase_config"; // import your Firebase auth instance
+import { auth } from "../../model/data/firebase/Firebase_config"; 
 
 const GetAllParticipant = () => {
   const [participants, setParticipants] = useState<IParticipant[]>([]);
@@ -27,7 +27,7 @@ const GetAllParticipant = () => {
     const checkAuthentication = async () => {
       const loggedIn = authService.isUserLoggedIn();
       if (!loggedIn) {
-        navigate("/login");
+        navigate("senecaadmin/login");
       } else {
         try {
           const allParticipants: IParticipant[] =

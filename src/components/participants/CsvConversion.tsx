@@ -13,7 +13,6 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "finaleJoinPreference",
     "grad_year",
     "isYourTeamComplete",
-    "participate_as",
     "teamName",
     "program",
     "semester",
@@ -81,6 +80,8 @@ export const convertToCSV = (objArray: IParticipant[]) => {
                     "participant.registrationDate is undefined or empty."
                   );
                 }
+              case "isYourTeamComplete":
+                return participant.isYourTeamComplete;
 
               default:
                 return "NA";

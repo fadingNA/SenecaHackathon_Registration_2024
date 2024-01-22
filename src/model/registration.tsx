@@ -21,7 +21,7 @@ export class Registration implements IRegistrationForm {
     }>;
   };
   challengeName: string;
-  isTeamCompleted: boolean;
+  isTeamCompleted: string;
   semester: number;
   graduationYear: number;
   senecaStudentStatus: string;
@@ -43,7 +43,7 @@ export class Registration implements IRegistrationForm {
     this.registrationType = formInput.registrationType || "";
     this.team = formInput.team || { teamName: "", teamMembers: [] };
     this.challengeName = formInput.challengeName || "";
-    this.isTeamCompleted = formInput.isTeamCompleted || false;
+    this.isTeamCompleted = formInput.isTeamCompleted || "No";
     this.semester = formInput.semester || 0;
     this.graduationYear = formInput.graduationYear || 0;
     this.senecaStudentStatus = formInput.senecaStudentStatus || "";

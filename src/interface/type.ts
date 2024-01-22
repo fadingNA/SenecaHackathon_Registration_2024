@@ -18,7 +18,7 @@ export interface IRegistrationForm {
     }>;
   };
   challengeName: string;
-  isTeamCompleted?: boolean;
+  isTeamCompleted?: string;
   semester?: number;
   graduationYear?: number;
   senecaStudentStatus: string;
@@ -60,7 +60,7 @@ export interface IParticipant {
   challenge: string;
 }
 
-export const RegisType = ["Team", "Individual"];
+export const RegisType = ["Yes", "No"];
 
 export const Challenge = ["Challenge1", "Challenge2", "Chellenge3"];
 

@@ -84,13 +84,13 @@ function RegistrationForm() {
       cellPhone
     ) {
       if (
-        registrationType === "Team" &&
+        registrationType === "Yes" &&
         teamName &&
         isTeamComplete &&
         senecaStatus
       ) {
         return true;
-      } else if (registrationType === "Individual") {
+      } else if (registrationType === "No") {
         return true;
       }
     }

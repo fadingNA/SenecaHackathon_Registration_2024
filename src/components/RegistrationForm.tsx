@@ -77,7 +77,6 @@ function RegistrationForm() {
       program &&
       collegeName &&
       registrationType &&
-      challengeName &&
       semester &&
       graduationYear &&
       pastHackathonParticipation &&
@@ -125,6 +124,7 @@ function RegistrationForm() {
       aluminiYear: aluminiYear,
       aluminiProgram: aluminiProgram,
     });
+    console.log(participant);
     const userId = await participant.submitForm();
     navigate(`/success/${userId}`);
     setIsSubmitted(true);

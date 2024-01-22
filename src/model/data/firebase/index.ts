@@ -94,6 +94,7 @@ export const getAllParticipants = async (): Promise<IParticipant[]> => {
     const participants = querySnapshot.docs.map((doc) => {
       return { ...doc.data() } as IParticipant;
     });
+
     return participants;
   } catch (err) {
     console.error("Error fetching participants:", err);

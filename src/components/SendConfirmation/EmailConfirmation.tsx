@@ -16,10 +16,10 @@ export const sendEmailConfirmation = async (
 
   return emailjs
     .send(
-      "service_jbvg8zp",
-      "template_yonqlq1",
+      import.meta.env.VITE_EMAIL_SERVICE || "service_jbvg8zp",
+      import.meta.env.VITE_EMAIL_TEMPLTE_ID || "template_yonqlq1",
       templateParams,
-      "yzlwbHoCvURosBv5j"
+      import.meta.env.VITE_EMAIL_API || "yzlwbHoCvURosBv5j"
     )
     .then((response) => {
       return { status: "success", data: response };

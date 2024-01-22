@@ -13,7 +13,7 @@ import {
   registrationTypeAtom,
   teamNameAtom,
   senecaStatusAtom,
-  finaleJoinPreferenceAtom,
+  //finaleJoinPreferenceAtom,
   pastHackathonParticipationAtom,
   numberOfTeamMembersAtom,
   teamMembersAtom,
@@ -27,7 +27,7 @@ import {
   //Challenge,
   isTeamCompleteList,
   senecaStudentStatus,
-  Preference,
+  //Preference,
   pastHackathonParticipationList,
   isAluminieList,
 } from "../../interface/type";
@@ -40,9 +40,9 @@ function RegistrationFormRegistrationType() {
   const [registrationType, setRegistrationType] = useAtom(registrationTypeAtom);
   const [teamName, setTeamName] = useAtom(teamNameAtom);
   const [senecaStatus, setSenecaStatus] = useAtom(senecaStatusAtom);
-  const [finaleJoinPreference, setFinaleJoinPreference] = useAtom(
-    finaleJoinPreferenceAtom
-  );
+  //const [finaleJoinPreference, setFinaleJoinPreference] = useAtom(
+  //  finaleJoinPreferenceAtom
+  // );
   const [pastHackathonParticipation, setPastHackathonParticipation] = useAtom(
     pastHackathonParticipationAtom
   );
@@ -280,9 +280,7 @@ function RegistrationFormRegistrationType() {
           sx={{ marginRight: 1 }}
           id="challengeName"
         />
-
-        */}
-        <FormRadioGroup
+ <FormRadioGroup
           label="How would you like to join the finale? "
           labelId="finaleJoinPreference"
           variable={finaleJoinPreference}
@@ -292,6 +290,8 @@ function RegistrationFormRegistrationType() {
           sx={{ marginRight: 1, position: "relative", left: 0 }}
           id="finaleJoinPreference"
         />
+        */}
+
         <FormSelect
           id="swagSize"
           label="SWAG Size"

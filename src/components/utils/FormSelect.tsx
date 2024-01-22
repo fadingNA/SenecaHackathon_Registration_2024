@@ -59,7 +59,7 @@ function FormSelect({
   return (
     <>
       <FormLabel className="block -mb-5 mt-2">
-        {formLabel ? formLabel : label}
+        {formLabel ? formLabel : ""}
       </FormLabel>
       <FormControl
         sx={{ width: "30%", minWidth: "240px", marginTop: 4, ...sx }}

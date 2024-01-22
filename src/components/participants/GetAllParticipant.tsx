@@ -5,7 +5,7 @@ We can switch to view by team
 Get Participant data from firebase
 https://console.firebase.google.com/u/0/project/senecahackathonregistration/firestore/data/~2FParticipants~2FSikMkVNJclmbyEYQySNg
 */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ParticipantCard from "./ParticipantCard";
 import TeamCard from "./TeamCard";

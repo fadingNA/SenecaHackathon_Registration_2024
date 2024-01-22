@@ -1,23 +1,23 @@
-import { initializeApp } from 'firebase/app';
-import { FirebaseConfig } from '../../../interface/type';
-import { getAnalytics } from 'firebase/analytics';
-import { collection, Firestore, getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { FirebaseConfig } from "../../../interface/type";
+import { getAnalytics } from "firebase/analytics";
+import { collection, Firestore, getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 
 const firebaseConfig: FirebaseConfig = {
-  apiKey: 'AIzaSyDl4-QqV8EU5PO34jMGrT0Q1u4t6QN7Dsw',
-  authDomain: 'senecahackathonregistration.firebaseapp.com',
-  projectId: 'senecahackathonregistration',
-  storageBucket: 'senecahackathonregistration.appspot.com',
-  messagingSenderId: '17328393836',
-  appId: '1:17328393836:web:2e4dba9eea78cf90221249',
-  measurementId: 'G-5QWBY15E71',
+  apiKey: import.meta.env.VITE_API_FB_KEY || "",
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN || "",
+  projectId: import.meta.env.VITE_PROJECT_ID || "",
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET || "",
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID || "",
+  appId: import.meta.env.VITE_APP_ID || "",
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID || "",
 };
 
 const app = initializeApp(firebaseConfig);
 const db: Firestore = getFirestore(app);
-const participantCollection = collection(db, 'Participants');
+const participantCollection = collection(db, "Participants");
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 

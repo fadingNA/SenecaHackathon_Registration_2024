@@ -10,7 +10,6 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "last_name",
     "email",
     "registrationDate",
-    "finaleJoinPreference",
     "grad_year",
     "isYourTeamComplete",
     "teamName",

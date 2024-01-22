@@ -78,7 +78,6 @@ function RegistrationForm() {
       semester &&
       graduationYear &&
       pastHackathonParticipation &&
-      finaleJoinPreference &&
       cellPhone
     ) {
       if (

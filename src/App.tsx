@@ -21,11 +21,11 @@ function App() {
       element: <RegistrationForm></RegistrationForm>,
     },
     {
-      path: "/getallparticipant",
+      path: "/senecaadmin/getallparticipant",
       element: <GetAllParticipant></GetAllParticipant>,
     },
     {
-      path: '/login',
+      path: '/senecaadmin/login',
       element: <Login></Login>
     }
   ]);

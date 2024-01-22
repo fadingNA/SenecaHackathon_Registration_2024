@@ -16,7 +16,7 @@ const Login = () => {
     try {
       const user = await authService.signIn(email, password);
       if (user) {
-        navigate("/getallparticipant"); 
+        navigate("/senecaadmin/getallparticipant"); 
       } else {
         console.log("Login failed");
       }

@@ -25,7 +25,7 @@ export class ParticipantService {
   }
 
   async getAll(): Promise<IParticipant[]> {
-    console.log('getAllParticipants')
+
     return getAllParticipants();
   }
 }

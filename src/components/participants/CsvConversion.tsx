@@ -53,7 +53,6 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     const teamName = participant.team?.teamName;
 
     if (participant.team && participant.team.teamMembers) {
-      console.log("teamName", participant.team.teamName);
       participant.team.teamMembers.forEach((member) => {
         let teamMemberLine = columns
           .map((key) => {

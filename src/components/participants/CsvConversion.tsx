@@ -72,14 +72,9 @@ export const convertToCSV = (objArray: IParticipant[]) => {
               case "teamName":
                 return teamName;
               case "registrationDate":
-                if (participant.registrationDate) {
-                  var date = participant.registrationDate.split(",");
-                  return date[0] + " " + date[1];
-                } else {
-                  console.log(
-                    "participant.registrationDate is undefined or empty."
-                  );
-                }
+                var date = participant.registrationDate?.split(",");
+                return date[0] + " " + date[1];
+
               case "isYourTeamComplete":
                 return participant.isYourTeamComplete;
 

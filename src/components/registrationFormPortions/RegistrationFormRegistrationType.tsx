@@ -124,7 +124,7 @@ function RegistrationFormRegistrationType() {
         />
         <FormRadioGroup
           id="registrationType"
-          label="Registration Type"
+          label="Do you have a team?"
           labelId="registrationType"
           variable={registrationType}
           setVariable={setRegistrationType}
@@ -132,7 +132,7 @@ function RegistrationFormRegistrationType() {
           defaultValue=""
           sx={{ marginRight: 1 }}
         />
-        {registrationType == "Team" && (
+        {registrationType == "Yes" && (
           <>
             <FormTextField
               id="teamName"

@@ -77,7 +77,6 @@ function RegistrationForm() {
       program &&
       collegeName &&
       registrationType &&
-      challengeName &&
       semester &&
       graduationYear &&
       pastHackathonParticipation &&
@@ -85,13 +84,13 @@ function RegistrationForm() {
       cellPhone
     ) {
       if (
-        registrationType === "Team" &&
+        registrationType === "Yes" &&
         teamName &&
         isTeamComplete &&
         senecaStatus
       ) {
         return true;
-      } else if (registrationType === "Individual") {
+      } else if (registrationType === "No") {
         return true;
       }
     }
@@ -125,6 +124,7 @@ function RegistrationForm() {
       aluminiYear: aluminiYear,
       aluminiProgram: aluminiProgram,
     });
+    console.log(participant);
     const userId = await participant.submitForm();
     navigate(`/success/${userId}`);
     setIsSubmitted(true);

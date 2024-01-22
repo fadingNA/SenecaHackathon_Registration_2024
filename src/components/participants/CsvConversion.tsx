@@ -10,11 +10,9 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "last_name",
     "email",
     "registrationDate",
-    "challengeSet",
     "finaleJoinPreference",
     "grad_year",
     "isYourTeamComplete",
-    "participate_as",
     "teamName",
     "program",
     "semester",
@@ -36,12 +34,14 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     let participantLine = columns
       .map((key) => {
         if (key === "registrationDate") {
-          const [date, time] = participant.registrationDate.split(", ");
-          return date + " " + time;
+          if (participant.registrationDate) {
+            var date = participant.registrationDate.split(",");
+            return date[0] + " " + date[1];
+          } else {
+            console.log("participant.registrationDate is undefined or empty.");
+          }
         } else if (key === "teamName") {
           return participant.team ? participant.team.teamName : "NA";
-        } else if (key === "challengeSet") {
-          return participant.challenge ? participant.challenge : "NA";
         } else {
           const value = participant[key as keyof typeof participant];
           return value !== undefined && value !== null ? value : "NA";
@@ -52,9 +52,6 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     csvString += participantLine + "\n";
 
     const teamName = participant.team?.teamName;
-    const challengeName = participant.challenge;
-
-    console.log("challengeName", challengeName);
 
     if (participant.team && participant.team.teamMembers) {
       console.log("teamName", participant.team.teamName);
@@ -74,8 +71,13 @@ export const convertToCSV = (objArray: IParticipant[]) => {
                 return member.institute;
               case "teamName":
                 return teamName;
-              case "challengeSet":
-                return challengeName;
+              case "registrationDate":
+                var date = participant.registrationDate?.split(",");
+                return date[0] + " " + date[1];
+
+              case "isYourTeamComplete":
+                return participant.isYourTeamComplete;
+
               default:
                 return "NA";
             }

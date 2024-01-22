@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Confirmation from "./components/Confirmation";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
+import GetAllParticipant from "./components/participants/GetAllParticipant";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
     {
       path: "/",
       element: <RegistrationForm></RegistrationForm>,
+    },
+    {
+      path: "/7775/admin/getall",
+      element: <GetAllParticipant></GetAllParticipant>,
     },
   ]);
   return (

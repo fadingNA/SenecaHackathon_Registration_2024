@@ -5,36 +5,44 @@ We can switch to view by team
 Get Participant data from firebase
 https://console.firebase.google.com/u/0/project/senecahackathonregistration/firestore/data/~2FParticipants~2FSikMkVNJclmbyEYQySNg
 */
-
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ParticipantCard from "./ParticipantCard";
 import TeamCard from "./TeamCard";
 import { IParticipant } from "../../../src/interface/type";
 import { ParticipantService } from "../../model/participant";
 import { convertToCSV, downloadCSV } from "./CsvConversion";
+import { AuthService } from "./Authenticate";
+import { auth } from "../../model/data/firebase/Firebase_config"; // import your Firebase auth instance
 
 const GetAllParticipant = () => {
   const [participants, setParticipants] = useState<IParticipant[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [viewByTeam, setViewByTeam] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
+  const [viewByTeam, setViewByTeam] = useState(false);
   const participantService = new ParticipantService();
+  const authService = new AuthService(auth);
+  const navigate = useNavigate();
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const allParticipants: IParticipant[] =
-          await participantService.getAll();
-        console.log("allParticipants", allParticipants);
-        setParticipants(allParticipants);
-      } catch (error) {
-        console.error("Failed to fetch participants", error);
-      } finally {
-        setLoading(false);
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const loggedIn = authService.isUserLoggedIn();
+      if (!loggedIn) {
+        navigate("/login");
+      } else {
+        try {
+          const allParticipants: IParticipant[] =
+            await participantService.getAll();
+          setParticipants(allParticipants);
+        } catch (error) {
+          console.error("Failed to fetch participants", error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
-    fetchData();
-  }, []);
+    checkAuthentication();
+  }, [navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -42,9 +50,8 @@ const GetAllParticipant = () => {
 
   const handleDownloadParticipantCSV = () => {
     const csvString: string = convertToCSV(participants);
-    console.log("csvString", csvString);
     const newDate = new Date();
-    downloadCSV(csvString, `participants-${newDate}.csv`);
+    downloadCSV(csvString, `participants-${newDate.toISOString()}.csv`);
   };
 
   return (

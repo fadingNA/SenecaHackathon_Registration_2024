@@ -7,6 +7,7 @@ import RegistrationFormPersonalInformation from "./registrationFormPortions/Regi
 import RegistrationFormEducation from "./registrationFormPortions/RegistrationFormEducation";
 import RegistrationFormRegistrationType from "./registrationFormPortions/RegistrationFormRegistrationType";
 import { Registration } from "../model/registration";
+import { sendEmailConfirmation } from "./SendConfirmation/EmailConfirmation";
 import { useAtom } from "jotai";
 import {
   firstNameAtom,
@@ -58,11 +59,8 @@ function RegistrationForm() {
 
   const navigate = useNavigate();
 
-  // Functionalities
-
   const getCurrentDateInCanada = () => {
     const date = new Date();
-    // 'America/Toronto' for Eastern Time
     return date.toLocaleString("en-CA", { timeZone: "America/Toronto" });
   };
 
@@ -124,10 +122,20 @@ function RegistrationForm() {
       aluminiYear: aluminiYear,
       aluminiProgram: aluminiProgram,
     });
-    console.log(participant);
-    const userId = await participant.submitForm();
-    navigate(`/success/${userId}`);
-    setIsSubmitted(true);
+
+    const userId: any = await participant.submitForm();
+
+    const checkStatusEmailSend: any = await sendEmailConfirmation(
+      email,
+      firstName
+    );
+
+    if (checkStatusEmailSend.status === "success") {
+      navigate(`/success/${userId}`);
+      setIsSubmitted(true);
+    } else {
+      console.error("Email sending failed:", checkStatusEmailSend.data);
+    }
   };
 
   return (

@@ -80,7 +80,7 @@ function RegistrationFormRegistrationType() {
       <Box sx={{ marginLeft: 4, marginTop: 3 }}>
         <FormRadioGroup
           id="isAlumini"
-          label="Are you a Seneca Alumini?"
+          label="Are you a Seneca Graduate?"
           labelId="senecaAlumini"
           variable={senecaAlumini}
           setVariable={setSenecaAlumini}
@@ -232,6 +232,7 @@ function RegistrationFormRegistrationType() {
                   <FormSelect
                     id={`swagSize-${index}`}
                     label="SWAG Size"
+                    formLabel="Select your apparel size? *"
                     labelId={`swagSizeLabel-${index}`}
                     variable={member.swagSize}
                     setVariable={(value: any) =>

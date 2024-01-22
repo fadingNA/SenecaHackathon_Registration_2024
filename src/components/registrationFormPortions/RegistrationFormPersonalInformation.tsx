@@ -18,7 +18,15 @@ function RegistrationFormPersonalInformation() {
   const [email, setEmail] = useAtom(emailAtom);
   return (
     <Box sx={{ marginTop: 6 }}>
-      <CustomFormLabel>Personal Information</CustomFormLabel>
+      <div className="flex" style={{ alignItems: "center" }}>
+        <CustomFormLabel>Personal Information </CustomFormLabel>
+        <p
+          className="pl font-light pt-0.5  text-[0.9rem] text-[#D92D27]"
+          style={{ margin: 0, paddingLeft: "10px" }}
+        >
+          (Team leader must be registering on behalf of your team.)
+        </p>
+      </div>
       <Box sx={{ marginLeft: 4 }}>
         <FormTextField
           id="firstName"
@@ -64,7 +72,6 @@ function RegistrationFormPersonalInformation() {
           onChange={setPhoneNumber}
           sx={{ width: "30%", marginTop: 3, marginRight: 1, minWidth: "240px" }}
           defaultCountry="CA"
-          
         />
       </Box>
     </Box>

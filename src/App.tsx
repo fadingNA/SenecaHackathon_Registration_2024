@@ -8,6 +8,7 @@ import Confirmation from "./components/Confirmation";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
 import GetAllParticipant from "./components/participants/GetAllParticipant";
+import Login from "./components/participants/Login";
 
 function App() {
   const router = createBrowserRouter([
@@ -20,9 +21,13 @@ function App() {
       element: <RegistrationForm></RegistrationForm>,
     },
     {
-      path: "/7775/admin/getall",
+      path: "/getallparticipant",
       element: <GetAllParticipant></GetAllParticipant>,
     },
+    {
+      path: '/login',
+      element: <Login></Login>
+    }
   ]);
   return (
     <React.Fragment>

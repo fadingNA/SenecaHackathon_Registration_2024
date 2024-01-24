@@ -3,6 +3,41 @@
 */
 
 import { IParticipant } from "../../../src/interface/type";
+const standardizeDate = (dateStr: string): string | null => {
+  if (!dateStr) return null;
+
+  // Replace 'a.m.' and 'p.m.' with 'AM' and 'PM' to standardize the meridian
+  let standardizedDateStr = dateStr
+    .replace(/a\.m\./i, "AM")
+    .replace(/p\.m\./i, "PM");
+
+  // Attempt to parse the date string
+  let date = new Date(standardizedDateStr);
+
+  // Check for Invalid Date
+  if (isNaN(date.getTime())) {
+    // Try parsing with a different format (YYYY-MM-DD)
+    const parts = standardizedDateStr.split(/[- :]/);
+    if (parts.length === 3) {
+      // If split by hyphen results in 3 parts, it's likely in YYYY-MM-DD format, attempt a re-parse
+      standardizedDateStr = parts.join("/");
+      date = new Date(standardizedDateStr);
+    }
+  }
+
+  // If date is still invalid, return null or original string for manual checking
+  if (isNaN(date.getTime())) return null;
+
+  // Format the date into the desired format 'YYYY-MM-DD HH:MM:SS'
+  const year = date.getFullYear().toString();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const seconds = date.getSeconds().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 
 export const convertToCSV = (objArray: IParticipant[]) => {
   const columns = [
@@ -19,7 +54,7 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "seneca_student_status",
     "tshirt_size",
     "college",
-    "alumni",
+    "alumini",
     "aluminiYear",
     "aluminiProgram",
   ];
@@ -35,8 +70,8 @@ export const convertToCSV = (objArray: IParticipant[]) => {
       .map((key) => {
         if (key === "registrationDate") {
           if (participant.registrationDate) {
-            var date = participant.registrationDate.split(",");
-            return date[0] + " " + date[1];
+            var date = standardizeDate(participant.registrationDate);
+            return date ? date : "NA";
           } else {
             console.log("participant.registrationDate is undefined or empty.");
           }
@@ -71,8 +106,8 @@ export const convertToCSV = (objArray: IParticipant[]) => {
               case "teamName":
                 return teamName;
               case "registrationDate":
-                var date = participant.registrationDate?.split(",");
-                return date[0] + " " + date[1];
+                var date = standardizeDate(participant.registrationDate);
+                return date ? date : "NA";
 
               case "isYourTeamComplete":
                 return participant.isYourTeamComplete;

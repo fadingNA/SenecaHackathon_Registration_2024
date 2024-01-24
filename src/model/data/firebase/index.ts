@@ -95,6 +95,8 @@ export const getAllParticipants = async (): Promise<IParticipant[]> => {
       return { ...doc.data() } as IParticipant;
     });
 
+    console.log("participants", participants);
+
     return participants;
   } catch (err) {
     console.error("Error fetching participants:", err);

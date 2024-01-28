@@ -22,6 +22,7 @@ export const registrationTypeAtom = atom("");
 export const senecaAlumniAtom = atom("");
 export const senecaAlumniYearAtom = atom(2023);
 export const senecaAlumniProgramAtom = atom("");
+export const doYouFollowUsOnSocialMediaAtom = atom("");
 
 // Non add
 // Atom for team name

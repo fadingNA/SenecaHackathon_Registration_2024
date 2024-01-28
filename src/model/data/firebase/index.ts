@@ -42,6 +42,7 @@ export const createParticipant = async (participant: IRegistrationForm) => {
       alumini: participant.alumini,
       aluminiYear: participant.aluminiYear,
       aluminiProgram: participant.aluminiProgram,
+      doYouFollowUsOnSocialMedia: participant.doYouFollowUsOnSocialMedia,
     });
 
     return docRef.id;

@@ -31,6 +31,7 @@ export class Registration implements IRegistrationForm {
   alumini: string;
   aluminiYear?: number;
   aluminiProgram?: string;
+  doYouFollowUsOnSocialMedia?: string;
 
   constructor(formInput: IRegistrationForm) {
     this.firstName = formInput.firstName || "";
@@ -54,6 +55,8 @@ export class Registration implements IRegistrationForm {
     this.alumini = formInput.alumini || "";
     this.aluminiYear = formInput.aluminiYear || 0;
     this.aluminiProgram = formInput.aluminiProgram || "";
+    this.doYouFollowUsOnSocialMedia =
+      formInput.doYouFollowUsOnSocialMedia || "";
   }
   async submitForm() {
     if (this !== undefined) {

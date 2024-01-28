@@ -57,6 +57,7 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "alumini",
     "aluminiYear",
     "aluminiProgram",
+    "doYouFollowUsOnSocialMedia",
   ];
 
   // const columns = ['first_name', 'last_name', 'email', 'college', ... ]; // Define the custom order

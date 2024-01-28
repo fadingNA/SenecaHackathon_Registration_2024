@@ -30,6 +30,7 @@ import {
   cellPhoneAtom,
   senecaAlumniAtom,
   senecaAlumniYearAtom,
+  doYouFollowUsOnSocialMediaAtom,
   senecaAlumniProgramAtom,
 } from "../atoms/FormAtoms";
 import { useNavigate } from "react-router-dom";
@@ -58,6 +59,7 @@ function RegistrationForm() {
   const [aluminiYear] = useAtom(senecaAlumniYearAtom);
   const [aluminiProgram] = useAtom(senecaAlumniProgramAtom);
   const [isReCAPVerified, setIsReCAPVerified] = React.useState(false);
+  const [doYouFollowUsOnSocialMedia] = useAtom(doYouFollowUsOnSocialMediaAtom);
 
   const onReCAPTCHAChange = (value: any) =>
     setIsReCAPVerified(value ? true : false);
@@ -84,6 +86,7 @@ function RegistrationForm() {
       graduationYear &&
       pastHackathonParticipation &&
       isReCAPVerified &&
+      doYouFollowUsOnSocialMedia &&
       cellPhone
     ) {
       if (
@@ -126,6 +129,7 @@ function RegistrationForm() {
       alumini: alumini,
       aluminiYear: aluminiYear,
       aluminiProgram: aluminiProgram,
+      doYouFollowUsOnSocialMedia: doYouFollowUsOnSocialMedia,
     });
 
     const userId: any = await participant.submitForm();

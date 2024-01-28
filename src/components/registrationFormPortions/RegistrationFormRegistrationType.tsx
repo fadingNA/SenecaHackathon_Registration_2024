@@ -14,6 +14,7 @@ import {
   teamNameAtom,
   senecaStatusAtom,
   //finaleJoinPreferenceAtom,
+  doYouFollowUsOnSocialMediaAtom,
   pastHackathonParticipationAtom,
   numberOfTeamMembersAtom,
   teamMembersAtom,
@@ -30,6 +31,7 @@ import {
   //Preference,
   pastHackathonParticipationList,
   isAluminieList,
+  FollowType,
 } from "../../interface/type";
 import FormTextField from "../utils/FormTextField";
 
@@ -52,6 +54,10 @@ function RegistrationFormRegistrationType() {
   const [teamMembers, setTeamMembers] = useAtom(teamMembersAtom);
   const [numberOfTeamMembers, setNumberOfTeamMembers] = useAtom(
     numberOfTeamMembersAtom
+  );
+
+  const [doYouFollowUsOnSocialMedia, setDoYouFollowUsOnSocialMedia] = useAtom(
+    doYouFollowUsOnSocialMediaAtom
   );
 
   React.useEffect(() => {
@@ -291,6 +297,16 @@ function RegistrationFormRegistrationType() {
           id="finaleJoinPreference"
         />
         */}
+        <FormRadioGroup
+          id="followedUsOnSocialMedia"
+          label="Do you followed us on social media?"
+          labelId="followedUsOnSocialMediae"
+          variable={doYouFollowUsOnSocialMedia}
+          setVariable={setDoYouFollowUsOnSocialMedia}
+          valueList={FollowType}
+          defaultValue=""
+          sx={{ marginRight: 1 }}
+        />
 
         <FormSelect
           id="swagSize"

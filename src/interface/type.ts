@@ -28,6 +28,7 @@ export interface IRegistrationForm {
   alumini: string;
   aluminiYear?: number;
   aluminiProgram?: string;
+  doYouFollowUsOnSocialMedia?: string;
 }
 
 export interface IParticipant {
@@ -58,9 +59,12 @@ export interface IParticipant {
   aluminiYear?: number;
   aluminiProgram?: string;
   challenge: string;
+  doYouFollowUsOnSocialMedia: string;
 }
 
 export const RegisType = ["Yes", "No"];
+
+export const FollowType = ["Yes", "No"];
 
 export const Challenge = ["Challenge1", "Challenge2", "Chellenge3"];
 

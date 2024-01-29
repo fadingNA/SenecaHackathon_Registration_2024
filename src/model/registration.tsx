@@ -1,5 +1,5 @@
 import { IRegistrationForm } from "../interface/type";
-import { createParticipant } from "./data/firebase/index";
+import { createParticipant, isEmailExist } from "./data/firebase/index";
 
 export class Registration implements IRegistrationForm {
   firstName: string;
@@ -60,6 +60,11 @@ export class Registration implements IRegistrationForm {
   }
   async submitForm() {
     if (this !== undefined) {
+      const emailExists = await isEmailExist(this.email);
+      if (emailExists) {
+        throw new Error("email already exists, please use another email.");
+      }
+
       return await createParticipant(this as IRegistrationForm);
     } else {
       throw new Error("Form data is incomplete");

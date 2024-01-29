@@ -37,6 +37,9 @@ import { useNavigate } from "react-router-dom";
 
 function RegistrationForm() {
   // States for form fields
+
+  const [emailError, setEmailError] = React.useState("");
+
   const [firstName] = useAtom(firstNameAtom);
   const [lastName] = useAtom(lastNameAtom);
   const [email] = useAtom(emailAtom);
@@ -84,8 +87,8 @@ function RegistrationForm() {
       registrationType &&
       semester &&
       graduationYear &&
-      pastHackathonParticipation &&
       isReCAPVerified &&
+      pastHackathonParticipation &&
       doYouFollowUsOnSocialMedia &&
       cellPhone
     ) {
@@ -105,45 +108,53 @@ function RegistrationForm() {
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const participant = new Registration({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      tShirtSize: tShirtSize,
-      program: program,
-      collegeName: collegeName,
-      registrationType: registrationType,
-      team: {
-        teamName: teamName,
-        teamMembers: teamMembers,
-      },
-      challengeName: challengeName,
-      isTeamCompleted: isTeamComplete,
-      semester: semester,
-      graduationYear: graduationYear,
-      senecaStudentStatus: senecaStatus,
-      pastHackathonParticipation: pastHackathonParticipation,
-      finaleJoinPreference: finaleJoinPreference,
-      cellPhone: cellPhone,
-      registrationAtDate: registeratDateCA,
-      alumini: alumini,
-      aluminiYear: aluminiYear,
-      aluminiProgram: aluminiProgram,
-      doYouFollowUsOnSocialMedia: doYouFollowUsOnSocialMedia,
-    });
 
-    const userId: any = await participant.submitForm();
+    try {
+      const participant = new Registration({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        tShirtSize: tShirtSize,
+        program: program,
+        collegeName: collegeName,
+        registrationType: registrationType,
+        team: {
+          teamName: teamName,
+          teamMembers: teamMembers,
+        },
+        challengeName: challengeName,
+        isTeamCompleted: isTeamComplete,
+        semester: semester,
+        graduationYear: graduationYear,
+        senecaStudentStatus: senecaStatus,
+        pastHackathonParticipation: pastHackathonParticipation,
+        finaleJoinPreference: finaleJoinPreference,
+        cellPhone: cellPhone,
+        registrationAtDate: registeratDateCA,
+        alumini: alumini,
+        aluminiYear: aluminiYear,
+        aluminiProgram: aluminiProgram,
+        doYouFollowUsOnSocialMedia: doYouFollowUsOnSocialMedia,
+      });
 
-    const checkStatusEmailSend: any = await sendEmailConfirmation(
-      email,
-      firstName
-    );
+      const userId: any = await participant.submitForm();
+      const checkStatusEmailSend: any = await sendEmailConfirmation(
+        email,
+        firstName
+      );
 
-    if (checkStatusEmailSend.status === "success") {
-      navigate(`/success/${userId}`);
-      setIsSubmitted(true);
-    } else {
-      console.error("Email sending failed:", checkStatusEmailSend.data);
+      if (checkStatusEmailSend.status === "success") {
+        navigate(`/success/${userId}`);
+        setIsSubmitted(true);
+      } else {
+        console.error("Email sending failed:", checkStatusEmailSend.data);
+      }
+    } catch (err: any) {
+      if (err instanceof Error) {
+        setEmailError(err.message);
+      } else {
+        console.error("Form submission failed:", err);
+      }
     }
   };
 
@@ -163,7 +174,17 @@ function RegistrationForm() {
 
       <RegistrationFormRegistrationType />
 
-      <Box sx={{ display: "flex", justifyContent: "center", marginY: 2 }}>
+      {emailError && (
+        <div
+          className="bg-red-100 border mt-3 ml-8 text-center border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <strong className="font-bold"> {email} </strong>
+          <span className="block sm:inline">{emailError}</span>
+        </div>
+      )}
+
+      <Box sx={{ display: "flex", justifyContent: "center", marginY: 5 }}>
         <ReCAPTCHA
           sitekey="6Lc18VgpAAAAADE5aFI8Y7gUl7gIL10fGj-VoiRi"
           onChange={onReCAPTCHAChange}
@@ -175,7 +196,7 @@ function RegistrationForm() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 10,
+          marginTop: 5,
         }}
       >
         <Button

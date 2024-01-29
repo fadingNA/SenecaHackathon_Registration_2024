@@ -32,6 +32,7 @@ export interface IRegistrationForm {
 }
 
 export interface IParticipant {
+  UID: string;
   email: string;
   finaleJoinPreference: string;
   first_name: string;

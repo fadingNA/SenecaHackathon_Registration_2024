@@ -7,9 +7,24 @@ import {
   getDoc,
   collection,
   getDocs,
+  query,
+  where,
 } from "firebase/firestore";
 import { db } from "./Firebase_config";
 import { IParticipant, IRegistrationForm } from "../../../interface/type";
+
+export const isEmailExist = async (email: string) => {
+  try {
+    const participantsRef = collection(db, "Participants");
+    const querySnapshot = await getDocs(
+      query(participantsRef, where("email", "==", email))
+    );
+    return !querySnapshot.empty;
+  } catch (err) {
+    console.error("Error checking email exist:", err);
+    return false;
+  }
+};
 
 export const createParticipant = async (participant: IRegistrationForm) => {
   try {
@@ -91,7 +106,7 @@ export const getParticipant = async (
 export const getAllParticipants = async (): Promise<IParticipant[]> => {
   try {
     const querySnapshot = await getDocs(collection(db, "Participants"));
-    
+
     const participants = querySnapshot.docs.map((doc) => {
       return { ...doc.data() } as IParticipant;
     });

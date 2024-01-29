@@ -60,12 +60,9 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "doYouFollowUsOnSocialMedia",
   ];
 
-  // const columns = ['first_name', 'last_name', 'email', 'college', ... ]; // Define the custom order
-  // const columns = Object.keys(objArray[0]).sort(); // Sort the keys alphabetically
-  // const columns = Object.keys(objArray[0]); // Use the keys in the order they appear in the object
-
   // Create header row from columns
   let csvString = columns.join(",") + "\n";
+
   objArray.forEach((participant) => {
     let participantLine = columns
       .map((key) => {

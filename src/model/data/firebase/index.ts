@@ -22,7 +22,7 @@ export const isEmailExist = async (email: string) => {
     return !querySnapshot.empty;
   } catch (err) {
     console.error("Error checking email exist:", err);
-    return false;
+    throw err;
   }
 };
 

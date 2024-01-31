@@ -60,14 +60,16 @@ export class Registration implements IRegistrationForm {
   }
   async submitForm() {
     if (this !== undefined) {
-      const emailExists = await isEmailExist(this.email);
-      if (emailExists) {
-        throw new Error("email already exists, please use another email.");
+      try {
+        const isExist = await isEmailExist(this.email);
+        if (isExist) {
+          throw new Error("Email already exist");
+        } else {
+          return await createParticipant(this as IRegistrationForm);
+        }
+      } catch (err) {
+        throw err;
       }
-
-      return await createParticipant(this as IRegistrationForm);
-    } else {
-      throw new Error("Form data is incomplete");
     }
   }
 }

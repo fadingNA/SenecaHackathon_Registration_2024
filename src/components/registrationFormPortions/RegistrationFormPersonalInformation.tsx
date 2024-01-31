@@ -25,7 +25,7 @@ function RegistrationFormPersonalInformation() {
           className="pl font-light pt-0.5  text-[0.9rem] text-[#D92D27]"
           style={{ margin: 0, paddingLeft: "10px" }}
         >
-          (Team leader must be registering on behalf of your team.)
+          (Team leader must be registering on behalf of your team. <br/> Or you can register as an individual and join a team later.)
         </p>
       </div>
       <Box sx={{ marginLeft: 4 }}>

@@ -7,7 +7,7 @@ import RegistrationFormPersonalInformation from "./registrationFormPortions/Regi
 import RegistrationFormEducation from "./registrationFormPortions/RegistrationFormEducation";
 import RegistrationFormRegistrationType from "./registrationFormPortions/RegistrationFormRegistrationType";
 import { Registration } from "../model/registration";
-import { sendEmailConfirmation } from "./SendConfirmation/EmailConfirmation";
+//import { sendEmailConfirmation } from "./SendConfirmation/EmailConfirmation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useAtom } from "jotai";
 import {
@@ -64,6 +64,10 @@ function RegistrationForm() {
   const [isReCAPVerified, setIsReCAPVerified] = React.useState(false);
   const [doYouFollowUsOnSocialMedia] = useAtom(doYouFollowUsOnSocialMediaAtom);
 
+  React.useEffect(() => {
+    setEmailError("");
+  }, [email]);
+
   const onReCAPTCHAChange = (value: any) =>
     setIsReCAPVerified(value ? true : false);
 
@@ -87,8 +91,8 @@ function RegistrationForm() {
       registrationType &&
       semester &&
       graduationYear &&
-      isReCAPVerified &&
       pastHackathonParticipation &&
+      isReCAPVerified &&
       doYouFollowUsOnSocialMedia &&
       cellPhone
     ) {
@@ -108,6 +112,8 @@ function RegistrationForm() {
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    setIsSubmitted(true);
 
     try {
       const participant = new Registration({
@@ -138,18 +144,23 @@ function RegistrationForm() {
       });
 
       const userId: any = await participant.submitForm();
-      const checkStatusEmailSend: any = await sendEmailConfirmation(
-        email,
-        firstName
-      );
-
-      if (checkStatusEmailSend.status === "success") {
+      //const checkStatusEmailSend: any = await sendEmailConfirmation(
+      //email,
+      //firstName
+      //);
+      if (userId) {
         navigate(`/success/${userId}`);
         setIsSubmitted(true);
       } else {
-        console.error("Email sending failed:", checkStatusEmailSend.data);
+        throw new Error("Form submission failed");
       }
+      //f (checkStatusEmailSend.status === "success") {
+
+      //} else {
+      //console.error("Email sending failed:", checkStatusEmailSend.data);
+      //}
     } catch (err: any) {
+      setIsSubmitted(false);
       if (err instanceof Error) {
         setEmailError(err.message);
       } else {

@@ -18,7 +18,14 @@ function RegistrationFormEducation() {
   return (
     <Box sx={{ marginTop: 6 }}>
       <CustomFormLabel>Education Information</CustomFormLabel>
-      <Box sx={{ marginLeft: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          marginLeft: 4,
+        }}
+      >
         <FormTextField
           id="institution"
           name="institution"

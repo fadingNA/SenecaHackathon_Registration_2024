@@ -57,6 +57,7 @@ export const convertToCSV = (objArray: IParticipant[]) => {
     "alumini",
     "aluminiYear",
     "aluminiProgram",
+    "challenge",
     "doYouFollowUsOnSocialMedia",
   ];
 
@@ -106,10 +107,10 @@ export const convertToCSV = (objArray: IParticipant[]) => {
               case "registrationDate":
                 var date = standardizeDate(participant.registrationDate);
                 return date ? date : "NA";
-
               case "isYourTeamComplete":
                 return participant.isYourTeamComplete;
-
+              case "challenge":
+                return participant.challenge;
               default:
                 return "NA";
             }

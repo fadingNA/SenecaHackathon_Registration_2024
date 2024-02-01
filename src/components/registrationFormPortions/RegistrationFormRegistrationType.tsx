@@ -4,11 +4,10 @@ import FormRadioGroup from "../utils/FormRadioGroup";
 import FormSelect from "../utils/FormSelect";
 import FormNumberField from "../utils/FormNumberField";
 import React from "react";
-
 import { useAtom } from "jotai";
 import {
   isTeamCompleteAtom,
-  //challengeNameAtom,
+  challengeNameAtom,
   tShirtSizeAtom,
   registrationTypeAtom,
   teamNameAtom,
@@ -25,7 +24,7 @@ import {
 import {
   ShirtSizes,
   RegisType,
-  //Challenge,
+  Challenge,
   isTeamCompleteList,
   senecaStudentStatus,
   //Preference,
@@ -35,16 +34,20 @@ import {
 } from "../../interface/type";
 import FormTextField from "../utils/FormTextField";
 
-function RegistrationFormRegistrationType() {
+interface RegistrationFormRegistrationTypeProps {
+  onTeamMemberEmailChange: (index: number, email: string) => void;
+  invalidEmails: Set<number>;
+}
+
+const RegistrationFormRegistrationType: React.FC<
+  RegistrationFormRegistrationTypeProps
+> = ({ onTeamMemberEmailChange, invalidEmails }) => {
   const [isTeamComplete, setIsTeamComplete] = useAtom(isTeamCompleteAtom);
-  //const [challengeName, setChallengeName] = useAtom(challengeNameAtom);
+  const [challengeName, setChallengeName] = useAtom(challengeNameAtom);
   const [tShirtSize, setTShirtSize] = useAtom(tShirtSizeAtom);
   const [registrationType, setRegistrationType] = useAtom(registrationTypeAtom);
   const [teamName, setTeamName] = useAtom(teamNameAtom);
   const [senecaStatus, setSenecaStatus] = useAtom(senecaStatusAtom);
-  //const [finaleJoinPreference, setFinaleJoinPreference] = useAtom(
-  //  finaleJoinPreferenceAtom
-  // );
   const [pastHackathonParticipation, setPastHackathonParticipation] = useAtom(
     pastHackathonParticipationAtom
   );
@@ -182,10 +185,16 @@ function RegistrationFormRegistrationType() {
               />
             </div>
             <br />
-            <div className="font-medium">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
               {teamMembers.map((member, index) => (
                 <div key={index} className="">
-                  <div className="mr-2 mt-6">
+                  <div className="mr-2 ">
                     <span>Member {index + 1}</span>
                   </div>
                   <FormTextField
@@ -234,6 +243,16 @@ function RegistrationFormRegistrationType() {
                     variable={member.email}
                     defaultValue=""
                     sx={{ marginRight: 1 }}
+                    onChange={(e: any) => {
+                      handleTeamMemberChange(index, "email", e.target.value);
+                      onTeamMemberEmailChange(index, e.target.value);
+                    }}
+                    error={invalidEmails.has(index)}
+                    helperText={
+                      invalidEmails.has(index)
+                        ? "This email already registered."
+                        : ""
+                    }
                   />
                   <FormSelect
                     id={`swagSize-${index}`}
@@ -250,7 +269,7 @@ function RegistrationFormRegistrationType() {
                   />
                 </div>
               ))}
-            </div>
+            </Box>
 
             <FormRadioGroup
               id="senecaStatus"
@@ -274,18 +293,18 @@ function RegistrationFormRegistrationType() {
             />
           </>
         )}
-        {/*
-        <FormSelect
-          label="Challenge Set"
-          labelId="challengeName"
-          formLabel="Select your preferred challenge set? *"
-          variable={challengeName}
-          setVariable={setChallengeName}
-          valueList={Challenge}
+        <FormRadioGroup
+          id="followedUsOnSocialMedia"
+          label="Do you followed us on social media?"
+          labelId="followedUsOnSocialMediae"
+          variable={doYouFollowUsOnSocialMedia}
+          setVariable={setDoYouFollowUsOnSocialMedia}
+          valueList={FollowType}
           defaultValue=""
           sx={{ marginRight: 1 }}
-          id="challengeName"
         />
+        {/*
+        
  <FormRadioGroup
           label="How would you like to join the finale? "
           labelId="finaleJoinPreference"
@@ -297,17 +316,41 @@ function RegistrationFormRegistrationType() {
           id="finaleJoinPreference"
         />
         */}
-        <FormRadioGroup
-          id="followedUsOnSocialMedia"
-          label="Do you followed us on social media?"
-          labelId="followedUsOnSocialMediae"
-          variable={doYouFollowUsOnSocialMedia}
-          setVariable={setDoYouFollowUsOnSocialMedia}
-          valueList={FollowType}
+        <FormSelect
+          label="Challenge Set"
+          labelId="challengeName"
+          formLabel="Select your preferred challenge set? *"
+          variable={challengeName}
+          setVariable={setChallengeName}
+          valueList={Challenge}
           defaultValue=""
           sx={{ marginRight: 1 }}
+          id="challengeName"
         />
+        <div className="flex items-center font-semibold text-yellow-400 space-x-4 mt-2 mb-2  bg-gray-700 rounded-lg p-2 ">
+          <svg
+            width="50"
+            height="50"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.4449 0.608765C8.0183 -0.107015 6.9817 -0.107015 6.55509 0.608766L0.161178 11.3368C-0.275824 12.07 0.252503 13 1.10608 13H13.8939C14.7475 13 15.2758 12.07 14.8388 11.3368L8.4449 0.608765ZM7.4141 1.12073C7.45288 1.05566 7.54712 1.05566 7.5859 1.12073L13.9798 11.8488C14.0196 11.9154 13.9715 12 13.8939 12H1.10608C1.02849 12 0.980454 11.9154 1.02018 11.8488L7.4141 1.12073ZM6.8269 4.48611C6.81221 4.10423 7.11783 3.78663 7.5 3.78663C7.88217 3.78663 8.18778 4.10423 8.1731 4.48612L8.01921 8.48701C8.00848 8.766 7.7792 8.98664 7.5 8.98664C7.2208 8.98664 6.99151 8.766 6.98078 8.48701L6.8269 4.48611ZM8.24989 10.476C8.24989 10.8902 7.9141 11.226 7.49989 11.226C7.08567 11.226 6.74989 10.8902 6.74989 10.476C6.74989 10.0618 7.08567 9.72599 7.49989 9.72599C7.9141 9.72599 8.24989 10.0618 8.24989 10.476Z"
+              fill="currentColor"
+            ></path>
+          </svg>
 
+          <div className="text-gray-50 text-xs">
+            Please note that the Challenge Category consists of a set of
+            challenges that students will be working on. If this category does
+            not have a minimum of 50 participants registered, it may be removed.
+            In such an event, participants who initially chose that category may
+            be requested to select an alternative one. The specific challenge
+            statement for participants in this category will be announced closer
+            to the beginning of the hackathon.
+          </div>
+        </div>
         <FormSelect
           id="swagSize"
           label="SWAG Size"
@@ -319,9 +362,29 @@ function RegistrationFormRegistrationType() {
           defaultValue=""
           sx={{ marginRight: 1 }}
         />
+        <div className="flex items-center font-semibold text-yellow-400 space-x-4 mt-2 mb-2  bg-gray-700 rounded-lg p-2">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.4449 0.608765C8.0183 -0.107015 6.9817 -0.107015 6.55509 0.608766L0.161178 11.3368C-0.275824 12.07 0.252503 13 1.10608 13H13.8939C14.7475 13 15.2758 12.07 14.8388 11.3368L8.4449 0.608765ZM7.4141 1.12073C7.45288 1.05566 7.54712 1.05566 7.5859 1.12073L13.9798 11.8488C14.0196 11.9154 13.9715 12 13.8939 12H1.10608C1.02849 12 0.980454 11.9154 1.02018 11.8488L7.4141 1.12073ZM6.8269 4.48611C6.81221 4.10423 7.11783 3.78663 7.5 3.78663C7.88217 3.78663 8.18778 4.10423 8.1731 4.48612L8.01921 8.48701C8.00848 8.766 7.7792 8.98664 7.5 8.98664C7.2208 8.98664 6.99151 8.766 6.98078 8.48701L6.8269 4.48611ZM8.24989 10.476C8.24989 10.8902 7.9141 11.226 7.49989 11.226C7.08567 11.226 6.74989 10.8902 6.74989 10.476C6.74989 10.0618 7.08567 9.72599 7.49989 9.72599C7.9141 9.72599 8.24989 10.0618 8.24989 10.476Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+
+          <div className="text-gray-50 text-xs">
+            Duplicate registration is not allowed and you will not be able to
+            change the T-shirt size. Please ensure that all the information
+            above is correct.
+          </div>
+        </div>
       </Box>
     </Box>
   );
-}
+};
 
 export default RegistrationFormRegistrationType;

@@ -67,7 +67,12 @@ export const RegisType = ["Yes", "No"];
 
 export const FollowType = ["Yes", "No"];
 
-export const Challenge = ["Challenge1", "Challenge2", "Chellenge3"];
+export const Challenge = [
+  "Student Housing",
+  "Affordable Housing Solutions",
+  "Community Well-being",
+  "Housing Tech",
+];
 
 export const DiscoveryMethod = ["Social Media", "Seneca", "Other"];
 

@@ -7,6 +7,7 @@ import RegistrationFormPersonalInformation from "./registrationFormPortions/Regi
 import RegistrationFormEducation from "./registrationFormPortions/RegistrationFormEducation";
 import RegistrationFormRegistrationType from "./registrationFormPortions/RegistrationFormRegistrationType";
 import { Registration } from "../model/registration";
+import { isEmailExist } from "../model/data/firebase/index";
 //import { sendEmailConfirmation } from "./SendConfirmation/EmailConfirmation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useAtom } from "jotai";
@@ -39,10 +40,17 @@ function RegistrationForm() {
   // States for form fields
 
   const [emailError, setEmailError] = React.useState("");
+  const [membersThatAreDupes, setMembersThatAreDupes] = React.useState<
+    number[]
+  >([]);
+  const [invalidEmails, setInvalidEmails] = React.useState<Set<number>>(
+    new Set()
+  );
+  const emailExistenceCache: Record<string, boolean> = {};
 
   const [firstName] = useAtom(firstNameAtom);
   const [lastName] = useAtom(lastNameAtom);
-  const [email] = useAtom(emailAtom);
+  const [email, setEmail] = useAtom(emailAtom);
   const [tShirtSize] = useAtom(tShirtSizeAtom);
   const [program] = useAtom(programAtom);
   const [collegeName] = useAtom(collegeNameAtom);
@@ -63,6 +71,72 @@ function RegistrationForm() {
   const [aluminiProgram] = useAtom(senecaAlumniProgramAtom);
   const [isReCAPVerified, setIsReCAPVerified] = React.useState(false);
   const [doYouFollowUsOnSocialMedia] = useAtom(doYouFollowUsOnSocialMediaAtom);
+
+  const handlePersonalEmailChange = async (newEmail: string) => {
+    setEmail(newEmail);
+
+    const emailExists = await isEmailExist(newEmail);
+    if (emailExists) {
+      setEmailError("This email is already registered.");
+      setInvalidEmails((prev) => new Set(prev).add(-1));
+    } else {
+      setEmailError("");
+      setInvalidEmails(
+        new Set([...invalidEmails].filter((index) => index !== -1))
+      );
+    }
+  };
+
+  const checkEmailInFireBase = async (email: string): Promise<Boolean> => {
+    if (email in emailExistenceCache) {
+      return emailExistenceCache[email];
+    }
+    const emailExists = await isEmailExist(email);
+    emailExistenceCache[email] = emailExists;
+    return emailExists;
+  };
+
+  const isInvalidEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return !emailRegex.test(email);
+  };
+
+  const handleEmailChange = async (index: number, newEmail: string) => {
+    const updatedTeamMembers = teamMembers.map((member, i) => {
+      if (i === index) {
+        return { ...member, email: newEmail };
+      }
+      return member;
+    });
+
+    let emailList = new Set([email]);
+    let dupeEmail = new Set<number>();
+    let invalidEmails = new Set<number>();
+
+    updatedTeamMembers.forEach((member, idx) => {
+      if (emailList.has(member.email) || isInvalidEmail(member.email)) {
+        dupeEmail.add(idx);
+      } else {
+        emailList.add(member.email);
+      }
+    });
+
+    for (const [idx, member] of updatedTeamMembers.entries()) {
+      if (!dupeEmail.has(idx) && !isInvalidEmail(member.email)) {
+        const emailExists = await checkEmailInFireBase(member.email);
+        if (emailExists) {
+          invalidEmails.add(idx);
+        }
+      }
+    }
+    setMembersThatAreDupes(Array.from(dupeEmail));
+    setInvalidEmails(invalidEmails);
+    setEmailError(
+      dupeEmail.size > 0 || invalidEmails.size > 0
+        ? "Duplicate or invalid email addresses are not allowed."
+        : ""
+    );
+  };
 
   React.useEffect(() => {
     setEmailError("");
@@ -90,9 +164,11 @@ function RegistrationForm() {
       collegeName &&
       registrationType &&
       semester &&
+      !emailError &&
+      isReCAPVerified &&
       graduationYear &&
       pastHackathonParticipation &&
-      isReCAPVerified &&
+      challengeName &&
       doYouFollowUsOnSocialMedia &&
       cellPhone
     ) {
@@ -112,7 +188,6 @@ function RegistrationForm() {
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
     setIsSubmitted(true);
 
     try {
@@ -144,21 +219,13 @@ function RegistrationForm() {
       });
 
       const userId: any = await participant.submitForm();
-      //const checkStatusEmailSend: any = await sendEmailConfirmation(
-      //email,
-      //firstName
-      //);
+
       if (userId) {
         navigate(`/success/${userId}`);
         setIsSubmitted(true);
       } else {
         throw new Error("Form submission failed");
       }
-      //f (checkStatusEmailSend.status === "success") {
-
-      //} else {
-      //console.error("Email sending failed:", checkStatusEmailSend.data);
-      //}
     } catch (err: any) {
       setIsSubmitted(false);
       if (err instanceof Error) {
@@ -178,20 +245,28 @@ function RegistrationForm() {
     >
       <Typography variant="h1">Registration Form</Typography>
       {/* Personal Information */}
-      <RegistrationFormPersonalInformation />
+      <RegistrationFormPersonalInformation
+        onEmailChange={handlePersonalEmailChange}
+        invalidEmails={invalidEmails}
+      />
 
       {/* Education */}
       <RegistrationFormEducation />
 
-      <RegistrationFormRegistrationType />
+      <RegistrationFormRegistrationType
+        onTeamMemberEmailChange={handleEmailChange}
+        invalidEmails={invalidEmails}
+      />
 
       {emailError && (
         <div
           className="bg-red-100 border mt-3 ml-8 text-center border-red-400 text-red-700 px-4 py-3 rounded relative"
           role="alert"
         >
-          <strong className="font-bold"> {email} </strong>
           <span className="block sm:inline">{emailError}</span>
+
+          {membersThatAreDupes.length > 0 &&
+            "Duplicate emails: " + membersThatAreDupes.join(", ")}
         </div>
       )}
 
@@ -201,6 +276,7 @@ function RegistrationForm() {
           onChange={onReCAPTCHAChange}
         />
       </Box>
+
       {/* Button set */}
       <Box
         sx={{

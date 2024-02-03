@@ -295,7 +295,7 @@ const RegistrationFormRegistrationType: React.FC<
         )}
         <FormRadioGroup
           id="followedUsOnSocialMedia"
-          label="Do you followed us on social media?"
+          label="Are you following us on social media?"
           labelId="followedUsOnSocialMediae"
           variable={doYouFollowUsOnSocialMedia}
           setVariable={setDoYouFollowUsOnSocialMedia}

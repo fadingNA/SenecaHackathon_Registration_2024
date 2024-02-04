@@ -30,6 +30,19 @@ export const isEmailExist = async (email: string) => {
   }
 };
 
+export const isPhoneExist = async (phone: string) => {
+  try {
+    const participantsRef = collection(db, "Participants");
+    const queryCellPhone = await getDocs(
+      query(participantsRef, where("cell_phone", "==", phone))
+    );
+    return queryCellPhone.docs.length > 0;
+  } catch (err) {
+    console.error("Error checking phone exist:", err);
+    throw err;
+  }
+};
+
 export const createParticipant = async (participant: IRegistrationForm) => {
   try {
     const docRef = await addDoc(collection(db, "Participants"), {
@@ -137,6 +150,3 @@ export const getAllCollege = async (): Promise<CollegeList[]> => {
     return [];
   }
 };
-
-
-

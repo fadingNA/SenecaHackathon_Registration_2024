@@ -1,13 +1,16 @@
 import CustomFormLabel from "../utils/CustomFormLabel";
 import { Box } from "@mui/material";
 import FormTextField from "../utils/FormTextField";
+import FormSelect from "../utils/FormSelect";
 import { useAtom } from "jotai";
+import collegeList from "./csvjson";
 import {
   programAtom,
   collegeNameAtom,
   semesterAtom,
   graduationYearAtom,
 } from "../../atoms/FormAtoms";
+
 import FormNumberField from "../utils/FormNumberField";
 
 function RegistrationFormEducation() {
@@ -15,6 +18,7 @@ function RegistrationFormEducation() {
   const [institution, setInstitution] = useAtom(collegeNameAtom);
   const [semester, setSemester] = useAtom(semesterAtom);
   const [graduationYear, setGraduationYear] = useAtom(graduationYearAtom);
+
   return (
     <Box sx={{ marginTop: 6 }}>
       <CustomFormLabel>Education Information</CustomFormLabel>
@@ -26,16 +30,18 @@ function RegistrationFormEducation() {
           marginLeft: 4,
         }}
       >
-        <FormTextField
-          id="institution"
-          name="institution"
-          label="College/University"
-          placeholder="Seneca Polytechnic"
-          setVariable={setInstitution}
+        <FormSelect
+          label="College Name"
+          labelId="collegeName"
           variable={institution}
+          setVariable={setInstitution}
+          valueList={collegeList.province.map(
+            (college: any) => college["College/University Name"]
+          )}
           defaultValue=""
-          sx={{ marginRight: 1 }}
-        ></FormTextField>
+          sx={{ marginRight: 1, marginTop: 3 }}
+          id="collegeName"
+        />
 
         <FormTextField
           id="programName"

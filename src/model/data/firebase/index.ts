@@ -11,7 +11,11 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "./Firebase_config";
-import { IParticipant, IRegistrationForm } from "../../../interface/type";
+import {
+  IParticipant,
+  IRegistrationForm,
+  CollegeList,
+} from "../../../interface/type";
 
 export const isEmailExist = async (email: string) => {
   try {
@@ -119,3 +123,20 @@ export const getAllParticipants = async (): Promise<IParticipant[]> => {
     return [];
   }
 };
+
+export const getAllCollege = async (): Promise<CollegeList[]> => {
+  try {
+    const query = await getDocs(collection(db, "Colleges"));
+    const colleges = query.docs.map((doc) => {
+      return { ...doc.data() } as CollegeList;
+    });
+
+    return colleges;
+  } catch (err) {
+    console.error("Error fetching colleges:", err);
+    return [];
+  }
+};
+
+
+

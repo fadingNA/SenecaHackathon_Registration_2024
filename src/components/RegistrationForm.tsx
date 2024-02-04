@@ -8,7 +8,6 @@ import RegistrationFormEducation from "./registrationFormPortions/RegistrationFo
 import RegistrationFormRegistrationType from "./registrationFormPortions/RegistrationFormRegistrationType";
 import { Registration } from "../model/registration";
 import { isEmailExist } from "../model/data/firebase/index";
-//import { sendEmailConfirmation } from "./SendConfirmation/EmailConfirmation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useAtom } from "jotai";
 import {

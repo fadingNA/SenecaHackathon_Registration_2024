@@ -1,5 +1,9 @@
 import { IRegistrationForm } from "../interface/type";
-import { createParticipant, isEmailExist } from "./data/firebase/index";
+import {
+  createParticipant,
+  isEmailExist,
+  isPhoneExist,
+} from "./data/firebase/index";
 
 export class Registration implements IRegistrationForm {
   firstName: string;
@@ -61,11 +65,17 @@ export class Registration implements IRegistrationForm {
   async submitForm() {
     if (this !== undefined) {
       try {
-        const isExist = await isEmailExist(this.email);
-        if (isExist) {
+        const isEmail = await isEmailExist(this.email);
+        if (isEmail) {
           throw new Error("Email already exist");
-        } else {
-          return await createParticipant(this as IRegistrationForm);
+        }
+        const isPhone = await isPhoneExist(this.cellPhone);
+        if (isPhone) {
+          throw new Error(`This ${this.cellPhone} number already exist.`);
+        }
+        const result = await createParticipant(this);
+        if (result) {
+          return result;
         }
       } catch (err) {
         throw err;

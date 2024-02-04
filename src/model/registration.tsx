@@ -66,10 +66,10 @@ export class Registration implements IRegistrationForm {
     if (this !== undefined) {
       try {
         const isEmail = await isEmailExist(this.email);
-        const isPhone = await isPhoneExist(this.cellPhone);
         if (isEmail) {
           throw new Error("Email already exist");
         }
+        const isPhone = await isPhoneExist(this.cellPhone);
         if (isPhone) {
           throw new Error(`This ${this.cellPhone} number already exist.`);
         }

@@ -74,6 +74,8 @@ export const Challenge = [
   "Housing Tech",
 ];
 
+
+
 export const DiscoveryMethod = ["Social Media", "Seneca", "Other"];
 
 export const Preference = ["Virtual", "In-person"];
@@ -100,6 +102,10 @@ export interface ChallengeSet {
   challengeLinkText: string;
   challengeLinkDescription: string;
   challengeLinkImage: string;
+}
+
+export interface CollegeList {
+  name: string;
 }
 
 export interface FirebaseConfig {

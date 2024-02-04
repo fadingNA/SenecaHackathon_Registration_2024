@@ -25,7 +25,7 @@ interface FormSelectProps {
   required?: boolean;
   defaultValue: string | null;
   valueList: Array<string | number>;
-  formLabel?: string; // optional prop for the form label text
+  formLabel?: string;
 }
 
 function FormSelect({
@@ -76,7 +76,12 @@ function FormSelect({
           onChange={(event) => conditionalSetFunction(event)}
         >
           {valueList.map((value: number | string) => (
-            <MenuItem key={value} value={value}>
+            <MenuItem
+              aria-label="dropdown_college"
+              key={value}
+              value={value}
+              className="text-[0.8rem] hover:bg-red-500"
+            >
               {value}
             </MenuItem>
           ))}

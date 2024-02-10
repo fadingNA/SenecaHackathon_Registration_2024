@@ -20,6 +20,7 @@ export class Registration implements IRegistrationForm {
       firstName: string;
       lastName: string;
       institute: string;
+      customInstitute?: string;
       email?: string;
       swagSize?: string;
     }>;

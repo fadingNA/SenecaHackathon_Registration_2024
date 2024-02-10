@@ -102,6 +102,8 @@ export const convertToCSV = (objArray: IParticipant[]) => {
                 return member.email;
               case "college":
                 return member.institute;
+              case "customInstitute":
+                return member.customInstitute;
               case "teamName":
                 return teamName;
               case "registrationDate":

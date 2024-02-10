@@ -33,6 +33,7 @@ const GetAllParticipant = () => {
           const allParticipants: IParticipant[] =
             await participantService.getAll();
           setParticipants(allParticipants);
+          console.log("allParticipants", allParticipants);
         } catch (error) {
           console.error("Failed to fetch participants", error);
         } finally {

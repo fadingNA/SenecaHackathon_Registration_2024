@@ -13,6 +13,7 @@ export interface IRegistrationForm {
       firstName: string;
       lastName: string;
       institute: string;
+      customInstitute?: string;
       email?: string;
       swagSize?: string;
     }>;
@@ -50,6 +51,7 @@ export interface IParticipant {
       firstName: string;
       lastName: string;
       institute: string;
+      customInstitute?: string;
       email?: string;
       swagSize?: string;
     }>;
@@ -73,8 +75,6 @@ export const Challenge = [
   "Community Well-being",
   "Housing Tech",
 ];
-
-
 
 export const DiscoveryMethod = ["Social Media", "Seneca", "Other"];
 

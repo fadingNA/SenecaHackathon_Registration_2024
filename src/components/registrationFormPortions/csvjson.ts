@@ -942,6 +942,9 @@ const collegeList = {
     {
       "College/University Name": "triOS College - Ottawa",
     },
+    {
+      "College/University Name": "Other",
+    },
   ],
 };
 

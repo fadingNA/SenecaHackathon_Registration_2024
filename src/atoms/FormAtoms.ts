@@ -34,6 +34,7 @@ export const teamMembersAtom = atom<
     firstName: string;
     lastName: string;
     institute: string;
+    customInstitute?: string;
     email: string;
     swagSize: string;
   }[]

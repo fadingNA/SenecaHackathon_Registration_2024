@@ -2,8 +2,10 @@ import { Box } from "@mui/material";
 import CustomFormLabel from "../utils/CustomFormLabel";
 import FormRadioGroup from "../utils/FormRadioGroup";
 import FormSelect from "../utils/FormSelect";
+
 import FormNumberField from "../utils/FormNumberField";
 import React from "react";
+import collegeList from "./csvjson";
 import { useAtom } from "jotai";
 import {
   isTeamCompleteAtom,
@@ -72,15 +74,26 @@ const RegistrationFormRegistrationType: React.FC<
     );
   }, [numberOfTeamMembers]);
 
-  const handleTeamMemberChange = (
-    index: number,
-    key: string,
-    value: string
-  ) => {
-    const updatedTeamMembers = teamMembers.map((member, i) =>
-      i === index ? { ...member, [key]: value } : member
+  const handleTeamMemberChange = (index: any, key: any, value: any) => {
+    setTeamMembers((prevMembers) =>
+      prevMembers.map((member, i) => {
+        if (i === index) {
+          if (key === "institute" && value === "Other") {
+            // If the institute is 'Other', keep the institute value as 'Other'
+            // and prepare for custom institute input without altering existing customInstitute value (if any)
+            return {
+              ...member,
+              [key]: value,
+              customInstitute: member.customInstitute || "",
+            };
+          } else {
+            // For the customInstitute case, update directly or other fields
+            return { ...member, [key]: value };
+          }
+        }
+        return member;
+      })
     );
-    setTeamMembers(updatedTeamMembers);
   };
 
   return (
@@ -154,14 +167,6 @@ const RegistrationFormRegistrationType: React.FC<
               sx={{ marginRight: 1 }}
             />
 
-            {/**
-            {teamMembers.length <= 4 && (
-              <button type="button" onClick={handleAddPerson} className="mt-9">
-                <PersonAddIcon />
-              </button>
-            )}
-             */}
-
             <div
               onChange={(e: any) => {
                 const newCount = e.target.value;
@@ -193,8 +198,8 @@ const RegistrationFormRegistrationType: React.FC<
               }}
             >
               {teamMembers.map((member, index) => (
-                <div key={index} className="">
-                  <div className="mr-2 ">
+                <div key={index} className="container">
+                  <div className={`${index === 1 ? "mt-5" : "mt-1"} mr-2`}>
                     <span>Member {index + 1}</span>
                   </div>
                   <FormTextField
@@ -221,17 +226,34 @@ const RegistrationFormRegistrationType: React.FC<
                     defaultValue=""
                     sx={{ marginRight: 1 }}
                   />
-                  <FormTextField
-                    id={`institute-${index}`}
-                    name="institute"
-                    label="Institute"
-                    placeholder="Institute Name"
+
+                  <FormSelect
+                    label="College Name"
+                    labelId="collegeName"
+                    variable={member.institute}
+                    valueList={collegeList.province.map(
+                      (college: any) => college["College/University Name"]
+                    )}
                     setVariable={(value: any) =>
                       handleTeamMemberChange(index, "institute", value)
                     }
-                    variable={member.institute}
                     defaultValue=""
+                    sx={{ marginRight: 1, marginTop: 3 }}
+                    id="collegeName"
                   />
+                  {member.institute === "Other" && (
+                    <FormTextField
+                      id={`customInstitute-${index}`}
+                      name="customInstitute"
+                      label="Institute Name"
+                      placeholder="Enter institute name"
+                      variable={member.customInstitute || ""}
+                      setVariable={(value: any) =>
+                        handleTeamMemberChange(index, "customInstitute", value)
+                      }
+                      defaultValue=""
+                    />
+                  )}
                   <FormTextField
                     id={`email-${index}`}
                     name="email"

@@ -78,18 +78,8 @@ const RegistrationFormRegistrationType: React.FC<
     setTeamMembers((prevMembers) =>
       prevMembers.map((member, i) => {
         if (i === index) {
-          if (key === "institute" && value === "Other") {
-            // If the institute is 'Other', keep the institute value as 'Other'
-            // and prepare for custom institute input without altering existing customInstitute value (if any)
-            return {
-              ...member,
-              [key]: value,
-              customInstitute: member.customInstitute || "",
-            };
-          } else {
-            // For the customInstitute case, update directly or other fields
-            return { ...member, [key]: value };
-          }
+          // For the customInstitute case, update directly or other fields
+          return { ...member, [key]: value };
         }
         return member;
       })
@@ -241,19 +231,7 @@ const RegistrationFormRegistrationType: React.FC<
                     sx={{ marginRight: 1, marginTop: 3 }}
                     id="collegeName"
                   />
-                  {member.institute === "Other" && (
-                    <FormTextField
-                      id={`customInstitute-${index}`}
-                      name="customInstitute"
-                      label="Institute Name"
-                      placeholder="Enter institute name"
-                      variable={member.customInstitute || ""}
-                      setVariable={(value: any) =>
-                        handleTeamMemberChange(index, "customInstitute", value)
-                      }
-                      defaultValue=""
-                    />
-                  )}
+
                   <FormTextField
                     id={`email-${index}`}
                     name="email"

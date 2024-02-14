@@ -227,6 +227,8 @@ function RegistrationForm() {
       }
     } catch (err: any) {
       setIsSubmitted(false);
+      console.log(err);
+
       if (err instanceof Error) {
         setEmailError(err.message);
       } else {

@@ -60,7 +60,7 @@ export const createParticipant = async (participant: IRegistrationForm) => {
           firstName: member.firstName,
           lastName: member.lastName,
           institute: member.institute,
-          customInstitute: member.customInstitute,
+
           email: member.email,
           swagSize: member.swagSize,
         })),

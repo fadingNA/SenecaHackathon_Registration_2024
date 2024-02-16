@@ -1,13 +1,16 @@
 import CustomFormLabel from "../utils/CustomFormLabel";
 import { Box } from "@mui/material";
 import FormTextField from "../utils/FormTextField";
+import FormSelect from "../utils/FormSelect";
 import { useAtom } from "jotai";
+import collegeList from "./csvjson";
 import {
   programAtom,
   collegeNameAtom,
   semesterAtom,
   graduationYearAtom,
 } from "../../atoms/FormAtoms";
+
 import FormNumberField from "../utils/FormNumberField";
 
 function RegistrationFormEducation() {
@@ -15,20 +18,30 @@ function RegistrationFormEducation() {
   const [institution, setInstitution] = useAtom(collegeNameAtom);
   const [semester, setSemester] = useAtom(semesterAtom);
   const [graduationYear, setGraduationYear] = useAtom(graduationYearAtom);
+
   return (
     <Box sx={{ marginTop: 6 }}>
       <CustomFormLabel>Education Information</CustomFormLabel>
-      <Box sx={{ marginLeft: 4 }}>
-        <FormTextField
-          id="institution"
-          name="institution"
-          label="College/University"
-          placeholder="Seneca College"
-          setVariable={setInstitution}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          marginLeft: 4,
+        }}
+      >
+        <FormSelect
+          label="College Name"
+          labelId="collegeName"
           variable={institution}
+          setVariable={setInstitution}
+          valueList={collegeList.province.map(
+            (college: any) => college["College/University Name"]
+          )}
           defaultValue=""
-          sx={{ marginRight: 1 }}
-        ></FormTextField>
+          sx={{ marginRight: 1, marginTop: 3 }}
+          id="collegeName"
+        />
 
         <FormTextField
           id="programName"
@@ -48,7 +61,7 @@ function RegistrationFormEducation() {
           placeholder="3"
           setVariable={setSemester}
           variable={semester}
-          defaultValue={1}
+          defaultValue={""}
           sx={{ marginRight: 1 }}
           max={10}
           min={1}
@@ -64,7 +77,7 @@ function RegistrationFormEducation() {
           defaultValue={2024}
           sx={{ marginRight: 1 }}
           max={2030}
-          min={2021}
+          min={1967}
         />
       </Box>
     </Box>

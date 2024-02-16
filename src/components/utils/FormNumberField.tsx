@@ -1,9 +1,11 @@
-import { SxProps, TextField, Theme } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
+import { SxProps, TextField, Theme } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
 
 interface FormNumberFieldProps {
   variable: null | number;
-  setVariable: Dispatch<SetStateAction<number>> | Dispatch<SetStateAction<null>>;
+  setVariable:
+    | Dispatch<SetStateAction<number>>
+    | Dispatch<SetStateAction<null>>;
   label: string;
   placeholder: string;
   id: string;
@@ -31,10 +33,12 @@ function FormTextField({
   const conditionalSetFunction = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (typeof event.target.value === 'number') {
+    if (typeof event.target.value === "number") {
       (setVariable as Dispatch<SetStateAction<number>>)(event.target.value);
     } else {
-      (setVariable as Dispatch<SetStateAction<null | string>>)(event.target.value);
+      (setVariable as Dispatch<SetStateAction<null | string>>)(
+        event.target.value
+      );
     }
   };
   return (
@@ -43,11 +47,11 @@ function FormTextField({
       id={id}
       name={name}
       label={label}
-      value={variable && variable > -1 ? variable : defaultValue}
+      value={variable || defaultValue}
       placeholder={placeholder}
       required
       onChange={(event) => conditionalSetFunction(event)}
-      sx={{ width: '30%', marginTop: 3, minWidth: '240px', ...sx }}
+      sx={{ width: "30%", marginTop: 3, minWidth: "240px", ...sx }}
       InputProps={{ inputProps: { min: min, max: max } }}
       type="number"
     />

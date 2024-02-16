@@ -2,59 +2,93 @@ export interface IRegistrationForm {
   firstName: string;
   lastName: string;
   email: string;
+  registrationAtDate: string;
   tShirtSize: string;
   program: string;
   collegeName?: string;
   registrationType: string;
-  teamName?: string;
+  team: {
+    teamName: string;
+    teamMembers: Array<{
+      firstName: string;
+      lastName: string;
+      institute: string;
+      email?: string;
+      swagSize?: string;
+    }>;
+  };
   challengeName: string;
-  isTeamCompleted?: boolean;
+  isTeamCompleted?: string;
   semester?: number;
   graduationYear?: number;
   senecaStudentStatus: string;
   pastHackathonParticipation: boolean;
   finaleJoinPreference: string;
   cellPhone: string;
+  alumini: string;
+  aluminiYear?: number;
+  aluminiProgram?: string;
+  doYouFollowUsOnSocialMedia?: string;
 }
 
 export interface IParticipant {
-  first_name: string;
-  last_name: string;
+  UID: string;
   email: string;
-  cell_phone: string;
-  registrationType: string;
-  college: string;
-  program: string;
-  current_year: number;
-  teamName?: string;
-  teamRole?: string;
-  isTeamComplete: boolean;
-  tShirtSize: string;
-  challengeName: string;
-  discoveryMethod: string;
-  senecaStudentStatus: string;
-  graduationYear: number;
-  pastHackathonParticipation: boolean;
   finaleJoinPreference: string;
+  first_name: string;
+  grad_year: number;
+  isYourTeamComplete: string;
+  last_name: string;
+  participate_as: string;
+  program: string;
+  registrationDate: string;
+  semester: number;
+  seneca_student_status: string;
+  team: {
+    teamName: string;
+    teamMembers: Array<{
+      firstName: string;
+      lastName: string;
+      institute: string;
+      email?: string;
+      swagSize?: string;
+    }>;
+  };
+  tshirt_size: string;
+  college: string;
+  alumini: string;
+  aluminiYear?: number;
+  aluminiProgram?: string;
+  challenge: string;
+  doYouFollowUsOnSocialMedia: string;
 }
 
-export const RegisType = ['Team', 'Individual'];
+export const RegisType = ["Yes", "No"];
 
-export const Challenge = ['Challenge1', 'Challenge2', 'Chellenge3'];
+export const FollowType = ["Yes", "No"];
 
-export const DiscoveryMethod = ['Social Media', 'Seneca', 'Other'];
+export const Challenge = [
+  "Student Housing",
+  "Affordable Housing Solutions",
+  "Community Well-being",
+  "Housing Tech",
+];
 
-export const Preference = ['Virtual', 'In-person', 'Maybe'];
+export const DiscoveryMethod = ["Social Media", "Seneca", "Other"];
 
-export const ShirtSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+export const Preference = ["Virtual", "In-person"];
 
-export const finaleJoinPreference = ['Yes', 'No', 'Maybe'];
+export const ShirtSizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
-export const isTeamCompleteList = ['Yes', 'No'];
+export const finaleJoinPreference = ["Yes", "No", "Maybe"];
 
-export const senecaStudentStatus = ['Yes', 'No'];
+export const isTeamCompleteList = ["Yes", "No"];
 
-export const pastHackathonParticipationList = ['Yes', 'No'];
+export const senecaStudentStatus = ["Yes", "No"];
+
+export const pastHackathonParticipationList = ["Yes", "No"];
+
+export const isAluminieList = ["Yes", "No"];
 
 export interface ChallengeSet {
   name: string;
@@ -66,6 +100,10 @@ export interface ChallengeSet {
   challengeLinkText: string;
   challengeLinkDescription: string;
   challengeLinkImage: string;
+}
+
+export interface CollegeList {
+  name: string;
 }
 
 export interface FirebaseConfig {

@@ -89,43 +89,43 @@ const collegeList = {
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business & Technology",
+        "Anderson College of Health | Business & Technology",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business & Technology",
+        "Anderson College of Health | Business & Technology",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business & Technology",
+        "Anderson College of Health | Business & Technology",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business & Technology-Mississauga",
+        "Anderson College of Health | Business & Technology-Mississauga",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business and Technology",
+        "Anderson College of Health | Business and Technology",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business and Technology - Brantford",
+        "Anderson College of Health | Business and Technology - Brantford",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business and Technology - London",
+        "Anderson College of Health | Business and Technology - London",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business and Technology - Windsor",
+        "Anderson College of Health | Business and Technology - Windsor",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business and Technology- Kitchener campus",
+        "Anderson College of Health | Business and Technology- Kitchener campus",
     },
     {
       "College/University Name":
-        "Anderson College of Health, Business and Technology-Toronto",
+        "Anderson College of Health | Business and Technology-Toronto",
     },
     {
       "College/University Name": "Aplus Institute",
@@ -165,19 +165,19 @@ const collegeList = {
     },
     {
       "College/University Name":
-        "CDI College of Business, Technology & Health Care-Mississauga",
+        "CDI College of Business | Technology & Health Care-Mississauga",
     },
     {
       "College/University Name":
-        "CDI College of Business, Technology & Health Care-Scarborough",
+        "CDI College of Business | Technology & Health Care-Scarborough",
     },
     {
       "College/University Name":
-        "CDI College of Business, Technology & Health Care-Toronto",
+        "CDI College of Business | Technology & Health Care-Toronto",
     },
     {
       "College/University Name":
-        "CDI College of Business, Technology and Healthcare-North York",
+        "CDI College of Business | Technology and Healthcare-North York",
     },
     {
       "College/University Name": "CIMT College",
@@ -214,7 +214,7 @@ const collegeList = {
     },
     {
       "College/University Name":
-        "CLI College of Business, Health and Technology- Hamilton",
+        "CLI College of Business | Health and Technology- Hamilton",
     },
     {
       "College/University Name": "CMU College of Makeup Art & Design",
@@ -271,19 +271,19 @@ const collegeList = {
     },
     {
       "College/University Name":
-        "Canadian College of Business, Science & Technology",
+        "Canadian College of Business | Science & Technology",
     },
     {
       "College/University Name":
-        "Canadian College of Business, Science & Technology Inc - Mississauga",
+        "Canadian College of Business | Science & Technology Inc - Mississauga",
     },
     {
       "College/University Name":
-        "Canadian College of Business, Science & Technology-Brampton",
+        "Canadian College of Business | Science & Technology-Brampton",
     },
     {
       "College/University Name":
-        "Canadian College of Health, Science & Technology",
+        "Canadian College of Health | Science & Technology",
     },
     {
       "College/University Name": "Canadian College of Naturopathic Medicine",
@@ -947,5 +947,14 @@ const collegeList = {
     },
   ],
 };
+
+collegeList.province.forEach((i) => {
+  if (i["College/University Name"].includes(",")) {
+    i["College/University Name"] = i["College/University Name"].replace(
+      /,/g,
+      " | "
+    );
+  }
+});
 
 export default collegeList;
